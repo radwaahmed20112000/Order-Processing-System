@@ -1,4 +1,4 @@
-package DatabaseAccessLayer;
+package databaseAccessLayer;
 
 public class OrderAccess {
 }
