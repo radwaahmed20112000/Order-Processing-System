@@ -4,6 +4,8 @@ import interfaces.IBook;
 import interfaces.IBookAuthor;
 import interfaces.IPublisher;
 import models.Book;
+import models.BookAuthor;
+import models.Publisher;
 
 public class BookBuilder {
     int bookId;
@@ -16,8 +18,14 @@ public class BookBuilder {
     int currentQuantity;
     IBookAuthor[] bookAuthors;
 
-    public void setBookAuthors(IBookAuthor[] bookAuthors) {
-        this.bookAuthors = bookAuthors;
+    public void setBookAuthors(String[] bookAuthorsNames) {
+        this.bookAuthors = new BookAuthor[bookAuthorsNames.length];
+        for(int i = 0 ;i<bookAuthorsNames.length;i++){
+            IBookAuthor bookAuthor = new BookAuthor(bookAuthorsNames[i]);
+            this.bookAuthors[i] = bookAuthor;
+        }
+
+
     }
 
     public void setBookId(int bookId) {
@@ -28,8 +36,8 @@ public class BookBuilder {
         this.title = title;
     }
 
-    public void setPublisher(IPublisher publisher) {
-        this.publisher = publisher;
+    public void setPublisher(String  name , String address ,String telephoneNumber) {
+        this.publisher = new Publisher(name , address, telephoneNumber);
     }
 
     public void setPublicationYear(String publicationYear) {

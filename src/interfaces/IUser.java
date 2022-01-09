@@ -16,6 +16,14 @@ public class IUser {
     ICart cart;
     CustomerService customerService;
     BookService bookService;
+
+
+    public IUser (String email){
+        this.emailAddress = email;
+        this.cart = new CartManager(this.emailAddress);
+        this.customerService = new CustomerService();
+        this.bookService = new BookService();
+    }
     public IUser(String firstName, String lastName, String password, String emailAddress, String phoneNumber,
                  String shippingAddress) {
         this.firstName = firstName;

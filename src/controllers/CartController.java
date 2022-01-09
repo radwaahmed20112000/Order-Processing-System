@@ -1,13 +1,10 @@
 package controllers;
 
-import builders.UserBuilder;
 import interfaces.IUser;
 
 public class CartController {
     public IUser userEmailMapper(String email){
-        UserBuilder userBuilder = new UserBuilder();
-        userBuilder.setEmailAddress(email);
-        IUser user = userBuilder.generateUser();
+        IUser user = new IUser(email);
         return user;
     }
     //on add to cart clicked

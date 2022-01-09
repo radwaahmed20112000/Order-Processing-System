@@ -1,6 +1,5 @@
 package services;
 
-import builders.UserBuilder;
 import databaseAccessLayer.CustomerAccess;
 import interfaces.IUser;
 
@@ -15,14 +14,7 @@ public class CustomerService {
                           String phoneNumber,
                           String shippingAddress,
                           boolean userType) {
-        UserBuilder userBuilder = new UserBuilder();
-        userBuilder.setFirstName(firstName);
-        userBuilder.setLastName(lastName);
-        userBuilder.setPassword(password);
-        userBuilder.setEmailAddress(emailAddress);
-        userBuilder.setPhoneNumber(phoneNumber);
-        userBuilder.setShippingAddress(shippingAddress);
-        IUser created = userBuilder.generateUser();
+        IUser created = new IUser(firstName,lastName,password,emailAddress,phoneNumber,shippingAddress);
         // check if user can be added successfully
         if(!customerAccess.addUser(created, userType))
             return false;

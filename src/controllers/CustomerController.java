@@ -1,25 +1,16 @@
 package controllers;
 
-import builders.UserBuilder;
 import interfaces.IUser;
 
 public class CustomerController {
     public IUser userMapper (String newUserFirstName , String newUserLastName , String newUserPassword
             ,String newUserEmail , String newUserPhoneNum , String newUserShippingAddress){
-        UserBuilder newUserBuilder = new UserBuilder();
-        newUserBuilder.setFirstName(newUserFirstName);
-        newUserBuilder.setLastName(newUserLastName);
-        newUserBuilder.setEmailAddress(newUserEmail);
-        newUserBuilder.setPassword(newUserPassword);
-        newUserBuilder.setPhoneNumber(newUserPhoneNum);
-        newUserBuilder.setShippingAddress(newUserShippingAddress);
-        IUser newUser = newUserBuilder.generateUser();
+        IUser newUser = new IUser(newUserFirstName,newUserLastName,newUserPassword,newUserEmail,newUserPhoneNum
+                ,newUserShippingAddress);
         return newUser;
     }
     public IUser userEmailMapper (String email){
-        UserBuilder userBuilder = new UserBuilder();
-        userBuilder.setEmailAddress(email);
-        IUser user = userBuilder.generateUser();
+        IUser user = new IUser(email);
         return user;
     }
     //on edit button clicked
