@@ -86,13 +86,13 @@ public class IUser {
         return customerService.editProfile(this,updatedUser);
 
     }
-    public List<IBook> getBooks(){
-        List<IBook> res =  bookService.getBooks();
-        for (IBook re : res) {
-            System.out.println(re.toString());
-        }
-        return res;
-    }
+//    public List<IBook> getBooks(){
+////        List<IBook> res =  bookService.getBooks();
+//        for (IBook re : res) {
+//            System.out.println(re.toString());
+//        }
+//        return res;
+//    }
 
     public List<IBook> searchBook(String searchWords){
         List<IBook> res =  bookService.findBook(searchWords);

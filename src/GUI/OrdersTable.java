@@ -1,11 +1,14 @@
 package GUI;
 
+import databaseAccessLayer.ManagerAccess;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 
 public class OrdersTable extends JFrame {
     //final Color blue = Color.decode(" ")
@@ -36,12 +39,16 @@ public class OrdersTable extends JFrame {
 
     public void buildGUI(int page) {
         this.page = page;
-        for (int i = 0; i < 8; i++) {
-//                if(mail==null)
-//                    break;
-            dtm.addRow(new Object[]{"Accept", "Book" + i, "Count", " Date"});
-            numberOfMails++;
-        }
+        ManagerAccess managerAccess = new ManagerAccess();
+        ResultSet resultSet =  managerAccess.getSupplierOrders();
+        try{
+            while(resultSet.next()) {
+                dtm.addRow(new String[]{"Accept", resultSet.getInt(1) + "", resultSet.getInt(2)+"",
+                        resultSet.getString(3)});
+                numberOfMails++;
+            }
+
+        }catch(Exception e){}
 //        }
 
 
@@ -61,7 +68,7 @@ public class OrdersTable extends JFrame {
     }
 
     public static void main(String[] args) {
-        UsersTable o = new UsersTable(1);
+        OrdersTable o = new OrdersTable(1);
     }
 }
 

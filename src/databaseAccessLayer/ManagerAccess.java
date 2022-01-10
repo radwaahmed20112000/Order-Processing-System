@@ -110,4 +110,10 @@ public class ManagerAccess extends Access{
         }
         return null;
     }
+    public ResultSet getSupplierOrders(){
+        try{
+            return stmt.executeQuery("SELECT * FROM SUPPLIER_ORDER");
+        }catch (Exception e){}
+        return null;
+    }
 }
