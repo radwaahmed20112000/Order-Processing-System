@@ -1,8 +1,13 @@
 package models;
 
+import databaseAccessLayer.BookAccess;
+import databaseAccessLayer.ManagerAccess;
 import interfaces.IUser;
 
 public class Manager extends IUser {
+    ManagerAccess managerAccess = new ManagerAccess();
+    BookAccess bookAccess = new BookAccess();
+
     public Manager(String firstName, String lastName, String password, String emailAddress, String phoneNumber, String shippingAddress) {
         super(firstName, lastName, password, emailAddress, phoneNumber, shippingAddress);
     }

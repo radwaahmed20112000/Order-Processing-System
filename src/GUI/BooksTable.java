@@ -5,7 +5,7 @@ import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.event.*;
 
-public class Table extends JTable {
+public class BooksTable extends JTable {
     //final Color blue = Color.decode(" ")
     JFrame invisible = new JFrame();
     //    Mail[] mails;
@@ -15,7 +15,7 @@ public class Table extends JTable {
     public static int numberOfMails = 0;
     int page;
 
-    public Table(int page) {
+    public BooksTable(int page) {
         this.page = page;
         buildGUI(page);
     }

@@ -124,6 +124,26 @@ public class BookAccess extends Access {
         }
         return null;
     }
+    public ResultSet findBookDetailsById(int bookId) {
+        //select query
+        try {
+            String query = "Select * from BOOK, PUBLISHER where isbn = " + bookId;
+            return stmt.executeQuery(query);
+        }catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    public ResultSet findBookAuthors(int bookId){
+        try {
+            String query = "Select BOOK_AUTHOR.name from BOOK_AUTHOR WHERE book_id = " + bookId;
+            return stmt.executeQuery(query);
+        }catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
 
     public int editBookQuantity(int bookId, int newQuantity) {
         try {

@@ -1,5 +1,7 @@
 package GUI;
 
-//TODO : order suppliers list screen
-public class ManagerProfile {
+import javax.swing.*;
+
+public class ManagerProfile extends JFrame {
+
 }
