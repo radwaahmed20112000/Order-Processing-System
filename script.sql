@@ -33,11 +33,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`BOOK` (
   `title` VARCHAR(45) NULL,
   `publisher` VARCHAR(45) NULL,
   `publication_year` VARCHAR(4) NULL,
-  `selling_price` INT NULL,
+  `selling_price` FLOAT NULL,
   `category` VARCHAR(45) NULL,
   `min_quantity_threshold` INT NULL,
   `current_quantity` INT NULL,
   PRIMARY KEY (`isbn`),
+  INDEX `fk_book_idx` (`publisher` ASC) VISIBLE,
   CONSTRAINT `fk_book`
     FOREIGN KEY (`publisher`)
     REFERENCES `mydb`.`PUBLISHER` (`name`)
@@ -99,6 +100,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`CART` (
   `book_id` INT NOT NULL,
   `count` INT NOT NULL,
   PRIMARY KEY (`user_email`, `book_id`),
+  INDEX `fk_cart_book_idx` (`book_id` ASC) VISIBLE,
   CONSTRAINT `fk_cart_book`
     FOREIGN KEY (`book_id`)
     REFERENCES `mydb`.`BOOK` (`isbn`)
@@ -120,6 +122,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`CLIENT_ORDER` (
   `user_email` VARCHAR(45) NULL,
   `order_date` TIMESTAMP NULL,
   PRIMARY KEY (`order_id`),
+  INDEX `fk_client_order_idx` (`user_email` ASC) VISIBLE,
   CONSTRAINT `fk_client_order`
     FOREIGN KEY (`user_email`)
     REFERENCES `mydb`.`USER` (`email_address`)
@@ -136,6 +139,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`CLIENT_ORDER_DETAILS` (
   `book_id` INT NOT NULL,
   `order_count` INT NOT NULL,
   PRIMARY KEY (`order_id`, `book_id`),
+  INDEX `fk_order_details_book_idx` (`book_id` ASC) VISIBLE,
   CONSTRAINT `fk_order_details_order`
     FOREIGN KEY (`order_id`)
     REFERENCES `mydb`.`CLIENT_ORDER` (`order_id`)
@@ -147,6 +151,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`CLIENT_ORDER_DETAILS` (
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
+
 
 -- -----------------------------------------------------
 -- Table `mydb`.`MANAGER`
@@ -165,4 +170,36 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+USE `mydb`;
+
+DELIMITER $$
+USE `mydb`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `mydb`.`BOOK_BEFORE_UPDATE` BEFORE UPDATE ON `BOOK` FOR EACH ROW
+BEGIN
+IF new.current_quantity < 0 THEN
+SIGNAL SQLSTATE '45000' 
+SET MESSAGE_TEXT = "Quantity of books in stock shiuldn't be negative";
+END IF;
+END$$
+
+USE `mydb`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `mydb`.`BOOK_AFTER_UPDATE` AFTER UPDATE ON `BOOK` FOR EACH ROW
+BEGIN
+
+IF new.current_quantity < old.min_quantity_threshold AND old.current_quantity >= old.min_quantity_threshold THEN
+INSERT INTO SUPPLIER_ORDER VALUES(old.isbn,old.min_quantity_threshold-new.current_quantity+20,now());
+END IF;
+
+END$$
+
+USE `mydb`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `mydb`.`SUPPLIER_ORDER_BEFORE_DELETE` BEFORE DELETE ON `SUPPLIER_ORDER` FOR EACH ROW
+BEGIN
+UPDATE BOOK
+SET current_quantity = current_quantity + old.required_quantity
+WHERE isbn = old.book_id;
+END$$
+
+
+DELIMITER ;
 
