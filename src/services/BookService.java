@@ -4,9 +4,9 @@ import builders.BookBuilder;
 import databaseAccessLayer.BookAccess;
 import interfaces.IBook;
 import interfaces.IBookAuthor;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+//import org.json.JSONArray;
+//import org.json.JSONException;
+//import org.json.JSONObject;
 
 
 import java.sql.Array;
@@ -121,20 +121,20 @@ public class BookService {
     }
     String[] jsonStringToArray(String jsonString) {
 
-        JSONArray jsonArray;
-        try {
-            jsonArray = new JSONArray(jsonString);
-            String[] stringArray = new String[jsonArray.length()];
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonobject = jsonArray.getJSONObject(i);
-                String name = jsonobject.getString("name");
-                stringArray[i] = name;
-            }
-            return stringArray;
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        JSONArray jsonArray;
+//        try {
+//            jsonArray = new JSONArray(jsonString);
+//            String[] stringArray = new String[jsonArray.length()];
+//            for (int i = 0; i < jsonArray.length(); i++) {
+//                JSONObject jsonobject = jsonArray.getJSONObject(i);
+//                String name = jsonobject.getString("name");
+//                stringArray[i] = name;
+//            }
+//            return stringArray;
+//
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
         return null;
     }
 
