@@ -98,15 +98,44 @@ public class BookAccess extends Access {
         return false;
     }
 
+    public static boolean isInteger(String str) {
+        if (str == null) {
+            return false;
+        }
+        int length = str.length();
+        if (length == 0) {
+            return false;
+        }
+        int i = 0;
+        if (str.charAt(0) == '-') {
+            if (length == 1) {
+                return false;
+            }
+            i = 1;
+        }
+        for (; i < length; i++) {
+            char c = str.charAt(i);
+            if (c < '0' || c > '9') {
+                return false;
+            }
+        }
+        return true;
+    }
     public ResultSet findBook(String searchWords) {
         // select query
         //return the o/p of the sql something like object array
+        if(isInteger(searchWords)){
+
+        }
         try {
-            String query = "Select * from BOOK where isbn = '" + searchWords
+            String query = "SELECT isbn , title, publisher,publication_year , selling_price , category ,min_quantity_threshold,current_quantity," +
+                    "JSON_ARRAYAGG(JSON_OBJECT('name', BOOK_AUTHOR.name)) as authors " +
+                    "                            FROM " +
+                    "                                (BOOK join BOOK_AUTHOR on BOOK.isbn = BOOK_AUTHOR.book_id )" + "where isbn = '" + searchWords
                     + "' OR title = '" + searchWords
                     + "' OR publisher = '"+ searchWords
                     + "' OR publication_year = '" + searchWords
-                    + "' OR category = '" + searchWords;
+                    + "' OR category = '" + searchWords + "GROUP BY BOOK_AUTHOR.book_id";
             return stmt.executeQuery(query);
         }catch(Exception e) {
             System.out.println(e.getMessage());

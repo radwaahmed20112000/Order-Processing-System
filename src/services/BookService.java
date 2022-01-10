@@ -4,9 +4,9 @@ import builders.BookBuilder;
 import databaseAccessLayer.BookAccess;
 import interfaces.IBook;
 import interfaces.IBookAuthor;
-//import org.json.JSONArray;
-//import org.json.JSONException;
-//import org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 import java.sql.Array;
@@ -103,40 +103,40 @@ public class BookService {
 
         return result;
     }
-//    public List<IBook> getBooks () {
-//        List<IBook> result  = new ArrayList<>();
-//        try {
-//            ResultSet rs = bookAccess.getBooks();
-//            while(rs.next()){
-//                IBook book = bookMapper(rs.getInt(1),rs.getString(2),rs.getString(3),
-//                        rs.getString(4),rs.getFloat(5),
-//                        rs.getString(6),rs.getInt(7),rs.getInt(8),"",
-//                        "", jsonStringToArray(rs.getString(9)));
-//                result.add(book);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return result;
-//    }
-//    String[] jsonStringToArray(String jsonString) {
-//
-//        JSONArray jsonArray;
-//        try {
-//            jsonArray = new JSONArray(jsonString);
-//            String[] stringArray = new String[jsonArray.length()];
-//            for (int i = 0; i < jsonArray.length(); i++) {
-//                JSONObject jsonobject = jsonArray.getJSONObject(i);
-//                String name = jsonobject.getString("name");
-//                stringArray[i] = name;
-//            }
-//            return stringArray;
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
+    public List<IBook> getBooks () {
+        List<IBook> result  = new ArrayList<>();
+        try {
+            ResultSet rs = bookAccess.getBooks();
+            while(rs.next()){
+                IBook book = bookMapper(rs.getInt(1),rs.getString(2),rs.getString(3),
+                        rs.getString(4),rs.getFloat(5),
+                        rs.getString(6),rs.getInt(7),rs.getInt(8),"",
+                        "", jsonStringToArray(rs.getString(9)));
+                result.add(book);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    String[] jsonStringToArray(String jsonString) {
+
+        JSONArray jsonArray;
+        try {
+            jsonArray = new JSONArray(jsonString);
+            String[] stringArray = new String[jsonArray.length()];
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonobject = jsonArray.getJSONObject(i);
+                String name = jsonobject.getString("name");
+                stringArray[i] = name;
+            }
+            return stringArray;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
         public IBook findBookById (int bookId){
         IBook book ;
@@ -164,7 +164,7 @@ public class BookService {
 
     public static void main(String[] args) {
         BookService s = new BookService();
-//        List<IBook> a = s.getBooks();
-//        System.out.println(Arrays.toString(a.toArray()));
+        List<IBook> a = s.getBooks();
+        System.out.println(Arrays.toString(a.toArray()));
     }
 }

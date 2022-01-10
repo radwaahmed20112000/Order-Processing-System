@@ -12,6 +12,7 @@ import javax.swing.GroupLayout;
 /**
  * @author hyl
  */
+
 public class FilterMenu extends JDialog {
     public FilterMenu() {
         super();

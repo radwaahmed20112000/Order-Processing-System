@@ -87,5 +87,10 @@ public class CustomerAccess extends Access {
         return res;
 
     }
+    public void logOut(String email) throws SQLException {
+        Statement stmt = connection.createStatement();
+        int res = stmt.executeUpdate("delete  Cart Where user_email = '"+ email +"'");
+
+    }
 
 }

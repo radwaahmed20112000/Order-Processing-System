@@ -132,7 +132,8 @@ public class CartService {
             int bookId = Integer.parseInt(Item.substring(0,Item.indexOf(':')));
             int count = Integer.parseInt(Item.substring(Item.indexOf(':')+1,Item.length()));
             IBook book = bookService.findBookById(bookId);
-           String temp = book.getTitle()+":"+book.getCurrentQuantity()+":"+book.getSellingPrice();
+           String temp = bookId+":" +book.getTitle()+":"+book.getSellingPrice()+
+                   ":"+count;
            result.add(temp);
         }
         return result;
