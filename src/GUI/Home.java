@@ -91,10 +91,9 @@ public class Home extends JFrame {
                 ManageBooks.setContentAreaFilled(false);
                 ManageBooks.setBorder(new LineBorder(Color.white, 1, true));
                 ManageBooks.setForeground(Color.white);
-//                ManageBooks.addActionListener(e -> {
-//                    InboxActionPerformed(e);
-//                    InboxActionPerformed(e);
-//                });
+                ManageBooks.addActionListener(e -> {
+                    BookCreation bc = new BookCreation(true,3);
+                });
 
                 //---- ManageUsers ----
                 ManageUsers.setText("Manage users");
@@ -206,6 +205,7 @@ public class Home extends JFrame {
     private JButton Logout;
 
 public static void main(String[] args) {
-    Home m = new Home();
+   Home m = new Home();
+    CustomerService.currentUser.getCart().addToCart(3,6);
 }
 }

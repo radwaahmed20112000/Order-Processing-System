@@ -37,7 +37,9 @@ public class BooksList extends JPanel {
         List<IBook> bookList = service.findBook(textSearch.getText().trim());
 
 //        search = new Search(MailGUI.current,textSearch.getText());
-        myBooksTable.buildGUI(bookList);
+        myBooksTable = new BooksTable(bookList);
+        scrollMails = new JScrollPane(myBooksTable);
+
 //        if(myTable.getNumberOfMails()==0){
 //            JOptionPane.showMessageDialog(invisible, "No mail in this Folder");
 //        }
@@ -140,6 +142,6 @@ public class BooksList extends JPanel {
     private JButton buttonSearch;
 //    Search search;
     JFrame invisible = new JFrame();
-    static BooksTable myBooksTable;
+    public static BooksTable myBooksTable;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

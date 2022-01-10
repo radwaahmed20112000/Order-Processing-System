@@ -28,31 +28,9 @@ public class BooksTable extends JTable {
 
     public void buildGUI(List<IBook> bookList) {
         this.bookList = bookList;
-        dtm = new DefaultTableModel(data, colNames);
-        if (dtm.getRowCount() > 0) {
-            for (int i = dtm.getRowCount() - 1; i > -1; i--) {
-                dtm.removeRow(i);
-            }
-        }
-        if(bookList == null){
-            bookList = CustomerService.currentUser.getBooks();
-            setModel(dtm);
-        }
-            for (IBook Ibook:bookList
-            ) {
-                Book book = (Book)Ibook;
-                dtm.addRow(new Object[]{"+", book.getTitle(), Arrays.toString(book.getAuthorsString()), book.getPublisher().getName(), book.getPublicationYear(), book.getSellingPrice(), book.getCategory(), book.getCurrentQuantity()});
-            }
-
+        setShowGrid(false);
         setBackground(Color.decode("#222831"));
         setForeground(Color.decode("#eeeeee"));
-        TableColumn tc = getColumnModel().getColumn(0);
-        tc.setCellEditor(
-                new ButtonEditor(new JCheckBox()));
-        tc.setCellRenderer(new ButtonRenderer());
-        // tc.setHeaderRenderer(new CheckBoxHeader(new MyItemListener()));
-        tc.setMaxWidth(1);
-        setShowGrid(false);
         getTableHeader().setReorderingAllowed(false);
         setRowSelectionAllowed(true);
         setColumnSelectionAllowed(false);
@@ -60,6 +38,36 @@ public class BooksTable extends JTable {
         setIntercellSpacing(new Dimension(0, 0));
         setSelectionBackground(Color.decode("#c3edea"));
         setVisible(true);
+
+        dtm = new DefaultTableModel(data, colNames);
+        if (dtm.getRowCount() > 0) {
+            for (int i = dtm.getRowCount() - 1; i > -1; i--) {
+                dtm.removeRow(i);
+            }
+        }
+
+        if(bookList == null){
+            bookList = CustomerService.currentUser.getBooks();
+            setModel(dtm);
+        }
+        if(bookList.size() == 0)
+            return;
+        String hello;
+        int i =0;
+            for (IBook Ibook:bookList
+            ) {
+                Book book = (Book)Ibook;
+                dtm.addRow(new Object[]{"+", book.getTitle(), Arrays.toString(book.getAuthorsString()), book.getPublisher().getName(), book.getPublicationYear(), book.getSellingPrice(), book.getCategory(), book.getCurrentQuantity()});
+            }
+
+
+        TableColumn tc = getColumnModel().getColumn(0);
+        tc.setCellEditor(
+                new ButtonEditor(new JCheckBox()));
+        tc.setCellRenderer(new ButtonRenderer());
+        // tc.setHeaderRenderer(new CheckBoxHeader(new MyItemListener()));
+        tc.setMaxWidth(1);
+
 
         addMouseListener(new java.awt.event.MouseAdapter() {
                              @Override
@@ -71,6 +79,7 @@ public class BooksTable extends JTable {
                                          JFrame frame = new JFrame();
 //                            GUIMailPanel guiMailPanel = new GUIMailPanel(mails[getSelectedRow()]);
 //                            frame.add(guiMailPanel.panel);
+                                         System.out.println(row);
                                          frame.setSize(700, 700);
                                          frame.setTitle("Test Mail_panel");
                                          frame.setLocationRelativeTo(null);
@@ -109,7 +118,7 @@ class ButtonRenderer extends JButton implements TableCellRenderer {
         protected JButton button;
 
         private String label;
-
+        private int id = 100;
         private boolean isPushed;
 
         public ButtonEditor(JCheckBox checkBox) {
@@ -121,6 +130,7 @@ class ButtonRenderer extends JButton implements TableCellRenderer {
 
         public Component getTableCellEditorComponent(JTable table, Object value,
                                                      boolean isSelected, int row, int column) {
+            id = row;
             if (isSelected) {
                 button.setForeground(table.getSelectionForeground());
                 button.setBackground(table.getSelectionBackground());
@@ -134,9 +144,8 @@ class ButtonRenderer extends JButton implements TableCellRenderer {
         }
 
         public Object getCellEditorValue() {
+            System.out.println(id);
             if (isPushed) {
-                //
-                //
                 JOptionPane.showMessageDialog(button, label + ": Ouch!");
                 // System.out.println(label + ": Ouch!");
             }
