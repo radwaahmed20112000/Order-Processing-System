@@ -5,8 +5,6 @@ import interfaces.IBookAuthor;
 import interfaces.IPublisher;
 import services.BookService;
 
-import java.util.Arrays;
-
 import java.util.List;
 
 public class Book implements IBook {
@@ -85,9 +83,12 @@ public class Book implements IBook {
 //        return bookService.editBookAuthor(this, updatedBookAuthors);
         return 0;
     }
-    public int editBookQuantity (int newQuantity){
-        return bookService.editBookQuantity(this.bookId,newQuantity);
+
+    @Override
+    public int editBookCount(int newCount) {
+        return bookService.editBookQuantity(this.bookId, newCount);
     }
+
 
     public boolean isEnoughCount(int count){
         return bookService.isEnoughCount(this.bookId,count);
@@ -104,7 +105,8 @@ public class Book implements IBook {
                 ", category='" + category + '\'' +
                 ", minQuantity=" + minQuantity +
                 ", currentQuantity=" + currentQuantity +
-                ", bookAuthors=" + Arrays.toString(bookAuthors) +
+                //TODO FARIDA
+//                ", bookAuthors=" + Arrays.toString(bookAuthors) +
                 '}';
     }
 }

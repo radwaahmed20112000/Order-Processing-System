@@ -3,8 +3,7 @@ package services;
 import builders.BookBuilder;
 import databaseAccessLayer.BookAccess;
 import interfaces.IBook;
-import interfaces.IBookAuthor;
-import models.Book;
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +14,24 @@ import java.util.List;
 public class BookService {
     BookAccess  bookAccess = new BookAccess();
 
+    public IBook bookMapper(int newBookId, String newTitle, String newPublisherName, String newPublicationYear,
+                            float newSellingPrice, String newCategory, int newMinQuantity, int newCurrentQuantity){
 
+
+        BookBuilder newBookBuilder = new BookBuilder();
+        newBookBuilder.setBookId(newBookId);
+        newBookBuilder.setTitle(newTitle);
+        newBookBuilder.setPublisherName(newPublisherName);
+        newBookBuilder.setPublisherAddress("");
+        newBookBuilder.setPublisherTelephoneNum("");
+        newBookBuilder.setPublicationYear(newPublicationYear);
+        newBookBuilder.setSellingPrice(newSellingPrice);
+        newBookBuilder.setCategory(newCategory);
+        newBookBuilder.setMinQuantity(newMinQuantity);
+        newBookBuilder.setCurrentQuantity(newCurrentQuantity);
+
+        return newBookBuilder.generateBook();
+    }
 
 //    public int editBook(IBook oldBook , IBook newBook){
 //        return bookAccess.editBook(oldBook.getBookId(),newBook.getBookId(), newBook.getTitle(),
@@ -35,14 +51,10 @@ public class BookService {
 //        }
 //       return 1;
 //    }
-    public int editBookCount (int bookId , int newCount){
+    public int editBookQuantity (int bookId , int newCount){
         //sql update query
-        int res = -1;
-        try {
-            res = bookAccess.editBookQuantity(bookId,newQuantity);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        int res;
+        res = bookAccess.editBookQuantity(bookId, newCount);
         return res;
     }
 
@@ -65,11 +77,11 @@ public class BookService {
     }
 
     public IBook findBookById (int bookId){
-        IBook book = null  ;
+        IBook book ;
         try {
            ResultSet rs = bookAccess.findBookById(bookId);
            while(rs.next()){
-            book = bookMapper(rs.getInt(1),rs.getString(2),rs.getString(3),
+               book = bookMapper(rs.getInt(1),rs.getString(2),rs.getString(3),
                     rs.getString(4),rs.getFloat(5),
                     rs.getString(6),rs.getInt(7),rs.getInt(8));
             return book;

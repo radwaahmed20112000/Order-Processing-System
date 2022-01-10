@@ -30,7 +30,7 @@ public class CartService {
         if (valid == true){
             // if there is then update it -- from the current Quantity done in editQuantity function
             IBook savedBook = bookService.findBookById(bookId);
-            book.editBookQuantity(savedBook.getCurrentQuantity()-count);
+            book.editBookCount(savedBook.getCurrentQuantity() - count);
             try {
                 // add the book with the desired count in user cart
                 cartAccess.addToCart(bookId,count,email);
@@ -58,8 +58,8 @@ public class CartService {
          //get the currentQuantity of the book to add the released ones to it
          IBook savedBook = bookService.findBookById(bookId);
          // return the book copies on the shelf
+         book.editBookCount(savedBook.getCurrentQuantity() + count);
 
-         book.editBookQuantity(savedBook.getCurrentQuantity()+count);
         try {
             //remove the item from the cart
             cartAccess.removeFromCart(bookId,email);

@@ -20,12 +20,15 @@ public class CartManager implements ICart {
     public boolean addToCart(int bookId , int count ){
        return cartService.addToCart(bookId,count,this.userEmail);
     }
+
     public void editCartBookCount(int bookId , int newCount){
        cartService.editCartBookCount(bookId,newCount,this.userEmail);
     }
+
     public void removeFromCart(int bookId){
         cartService.removeFromCart(bookId,this.userEmail);
     }
+
     public List<String> viewCart(){
         return cartService.viewCart(this.userEmail);
     }

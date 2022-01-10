@@ -1,10 +1,10 @@
 package controllers;
 
 import interfaces.IUser;
-
 import java.util.List;
 
 public class CartController {
+
     public IUser userEmailMapper(String email){
         IUser user = new IUser(email);
         return user;

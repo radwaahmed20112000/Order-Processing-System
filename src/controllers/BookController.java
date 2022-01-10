@@ -3,7 +3,6 @@ package controllers;
 import builders.BookBuilder;
 import interfaces.IBook;
 import interfaces.IBookAuthor;
-import interfaces.IPublisher;
 
 public class BookController {
     public IBook bookMapper(int newBookId, String newTitle, String newPublisherName,String newPublisherAddress,
@@ -30,7 +29,7 @@ public class BookController {
         return book;
     }
 
-//on edit book clicked
+    //on edit book clicked
     public int editBook (int oldBookId , int newBookId, String newTitle, String newPublisherName,String newPublisherAddress,
                          String newPublisherTelephoneNum, String newPublicationYear, float newSellingPrice, String newCategory,
                          int newMinQuantity, int newCurrentQuantity,String[]bookAuthorsNames) {

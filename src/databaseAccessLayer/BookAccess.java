@@ -1,6 +1,7 @@
 package databaseAccessLayer;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class BookAccess extends Access {
@@ -28,7 +29,6 @@ public class BookAccess extends Access {
         }
         return false;
     }
-    public ResultSet findBook(String searchWords) throws SQLException {
 
     public boolean addPublisher(String publisherName, String publisherAddress, String publisherTelephoneNum){
         try {
@@ -98,27 +98,44 @@ public class BookAccess extends Access {
         return false;
     }
 
-    public Object[] findBook(String searchWords){
+    public ResultSet findBook(String searchWords){
         // select query
         //return the o/p of the sql some thing like object array
-        Statement stmt = connection.createStatement();
-        String query = "Select * from BOOK where isbn = '" + searchWords + "' OR title = '"
-                + searchWords + "' OR publisher = '"+ searchWords + "' OR publication_year = '"+ searchWords + "' OR selling_price = '"
-                + searchWords + "' OR category = '"+ searchWords + "' OR min_quantity_threshold = '"+ searchWords + "' OR current_quantity ='"+ searchWords + "'";
-        ResultSet rs = stmt.executeQuery(query);
-        return rs;
+        try {
+            String query = "Select * from BOOK where isbn = '" + searchWords
+                    + "' OR title = '" + searchWords
+                    + "' OR publisher = '"+ searchWords
+                    + "' OR publication_year = '" + searchWords
+                    + "' OR selling_price = '" + searchWords
+                    + "' OR category = '" + searchWords
+                    + "' OR min_quantity_threshold = '" + searchWords
+                    + "' OR current_quantity ='" + searchWords + "'";
+            return stmt.executeQuery(query);
+        }catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
-    public ResultSet findBookById(int bookId) throws SQLException {
-        //select query
-        Statement stmt = connection.createStatement();
-        String query = "Select * from BOOK where isbn = " + bookId  ;
-        ResultSet rs = stmt.executeQuery(query);
-        return rs;
-    }
-   public int editBookQuantity(int bookId , int newQuantity) throws SQLException {
-       Statement stmt = connection.createStatement();
-       int res = stmt.executeUpdate("UPDATE  BOOK SET current_quantity = "+newQuantity +" WHERE isbn = " + bookId);
-       return res;
-   }
 
+    public ResultSet findBookById(int bookId) {
+        //select query
+        try {
+            String query = "Select * from BOOK where isbn = " + bookId  ;
+            return stmt.executeQuery(query);
+        }catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    public int editBookQuantity(int bookId , int newQuantity) {
+        try {
+            return stmt.executeUpdate("UPDATE  BOOK" +
+                    " SET current_quantity = " + newQuantity +
+                    " WHERE isbn = " + bookId);
+        }catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return -1;
+    }
 }

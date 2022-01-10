@@ -76,8 +76,8 @@ public class IUser {
     }
     public List<IBook> searchBook(String searchWords){
         List<IBook> res =  bookService.findBook(searchWords);
-        for(int i = 0 ;i<res.size();i++){
-            System.out.println(res.get(i).toString());
+        for (IBook re : res) {
+            System.out.println(re.toString());
         }
         return res;
        // return  bookService.findBook(searchWords);
