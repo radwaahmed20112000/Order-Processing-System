@@ -25,9 +25,9 @@ public class CustomerAccess extends Access {
             if(!checkEmailAddress(user.getEmailAddress(),type)) {
                 Statement stmt = connection.createStatement();
                 if(type==CUSTOMER) {
-                    stmt.executeUpdate("insert into customers values('" + user.getFirstName() + "','" + user.getLastName() + "','" + user.getPassword() + "','" + user.getPassword() + "','" + user.getEmailAddress() + "','" + user.getPhoneNumber() + "','" + user.getShippingAddress() + "')");
+                    stmt.executeUpdate("insert into USER values('" + user.getFirstName() + "','" + user.getLastName() + "','" + user.getPassword() + "','" + user.getPassword() + "','" + user.getEmailAddress() + "','" + user.getPhoneNumber() + "','" + user.getShippingAddress() + "')");
                 } else {
-                    stmt.executeUpdate("insert into managers values('" + user.getFirstName() + "','" + user.getLastName() + "','" + user.getPassword() + "','" + user.getPassword() + "','" + user.getEmailAddress() + "','" + user.getPhoneNumber() + "','" + user.getShippingAddress() + "')");
+                    stmt.executeUpdate("insert into MANAGER values('" + user.getFirstName() + "','" + user.getLastName() + "','" + user.getPassword() + "','" + user.getPassword() + "','" + user.getEmailAddress() + "','" + user.getPhoneNumber() + "','" + user.getShippingAddress() + "')");
                 }
                 return true;
             }
@@ -42,10 +42,10 @@ public class CustomerAccess extends Access {
             Statement stmt = connection.createStatement();
             ResultSet rs;
             if (type == CUSTOMER) {
-                rs = stmt.executeQuery("select exists(select * from customers where emailAddress = '" + emailAddress + "')");
+                rs = stmt.executeQuery("select exists(select * from USER where email_address = '" + emailAddress + "')");
 
             } else {
-                rs = stmt.executeQuery("select exists(select * from managers where emailAddress = '" + emailAddress + "')");
+                rs = stmt.executeQuery("select exists(select * from MANAGER where email_address = '" + emailAddress + "')");
             }
             rs.next();
             String s = rs.getString(1);
@@ -61,7 +61,7 @@ public class CustomerAccess extends Access {
             Boolean check = checkEmailAddress(emailAddress, type);
             if(check) {
                 Statement stmt = connection.createStatement();
-                ResultSet rs = stmt.executeQuery("Select * from users where emailAddress = '" + emailAddress + "'");
+                ResultSet rs = stmt.executeQuery("Select * from USER where email_address = '" + emailAddress + "'");
                 rs.next();
                 int logged = rs.getInt(5);
                 if(logged != 1) {
@@ -87,7 +87,7 @@ public class CustomerAccess extends Access {
     ,String newUserEmail , String newUserPhoneNum , String newUserShippingAddress) throws SQLException {
         //sql query update;
         Statement stmt = connection.createStatement();
-        int res = stmt.executeUpdate("UPDATE  CUSTOMER SET first_name ='"+newUserFirstName +"' , last_name = '"
+        int res = stmt.executeUpdate("UPDATE  USER SET first_name ='"+newUserFirstName +"' , last_name = '"
                 +newUserLastName +"' , password = '"+newUserPassword+"' , email_address = '"+newUserEmail+"' , phone_number = '"
                 +newUserPhoneNum +"' , shipping_address = '" + newUserShippingAddress + "' WHERE email_address = '" + oldUserEmail+"'");
         return res;

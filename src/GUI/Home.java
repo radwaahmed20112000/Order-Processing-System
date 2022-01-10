@@ -11,7 +11,6 @@ public class Home extends JFrame {
         initComponents();
     }
 
-//    App myApp = new App();
 
 //    private void composeActionPerformed(ActionEvent e) {
 //        GUICompose compose =new GUICompose();
@@ -41,15 +40,7 @@ public class Home extends JFrame {
 //    }
 
 
-   /* private void createUIComponents() {
-        thumb = new JLabel(new ImageIcon("81kTrSqMuLL._AC_SL1135_.jpg")) ;   }
-*/
-
     private void initComponents() {
-        // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - hyl
-        // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-        // Generated using JFormDesigner Evaluation license - hyl
         JPanel Menu = new JPanel();
         JButton Cart = new JButton();
         JPanel panel3 = new JPanel();
@@ -58,8 +49,6 @@ public class Home extends JFrame {
         ManageOrders = new JButton();
         Logout = new JButton();
         JPanel panel1 = new JPanel();
-//        App myApp = new App();
-//        myApp.setViewingOptions(MailGUI.current,null,new Sort("Date ( Lastest )"));
 
         //======== this ========
         setForeground(Color.white);
@@ -209,8 +198,6 @@ public class Home extends JFrame {
     private JButton ManageUsers;
     private JButton Logout;
 
-//    public static Folder current = new Folder("inbox",GUISignIn.Email);
-    // JFormDesigner - End of variables declaration  //GEN-END:variables
 public static void main(String[] args) {
     Home m = new Home();
 }
