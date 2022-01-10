@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class CustomerService {
     CustomerAccess customerAccess = new CustomerAccess();
-    static IUser currentUser;
+    public static IUser currentUser;
 
     public boolean signUp(String firstName,
                           String lastName,
@@ -15,13 +15,11 @@ public class CustomerService {
                           String emailAddress,
                           String phoneNumber,
                           String shippingAddress,
-                          boolean userType) {
-        IUser created = new IUser(firstName,lastName,password,emailAddress,phoneNumber,shippingAddress);
+                          boolean userType,String userName) {
+        IUser created = new IUser(firstName,lastName,password,emailAddress,phoneNumber,shippingAddress,userName);
         // check if user can be added successfully
-        if(!customerAccess.addUser(created, userType))
-            return false;
+        return customerAccess.addUser(created, userType);
         // if user added successfully, acknowledge user and ask user to login
-        return true;
     }
 
     public boolean signIn(String emailAddress, String password, boolean type) {

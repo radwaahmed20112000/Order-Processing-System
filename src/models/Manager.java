@@ -8,8 +8,8 @@ public class Manager extends IUser {
     ManagerAccess managerAccess = new ManagerAccess();
     BookAccess bookAccess = new BookAccess();
 
-    public Manager(String firstName, String lastName, String password, String emailAddress, String phoneNumber, String shippingAddress) {
-        super(firstName, lastName, password, emailAddress, phoneNumber, shippingAddress);
+    public Manager(String firstName, String lastName, String password, String emailAddress, String phoneNumber, String shippingAddress,String userName) {
+        super(firstName, lastName, password, emailAddress, phoneNumber, shippingAddress,userName);
     }
     public void confirmOrder (){
 
