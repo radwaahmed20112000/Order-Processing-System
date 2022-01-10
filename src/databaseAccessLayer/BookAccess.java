@@ -124,18 +124,25 @@ public class BookAccess extends Access {
     public ResultSet findBook(String searchWords) {
         // select query
         //return the o/p of the sql something like object array
+        String query;
         if(isInteger(searchWords)){
-
-        }
-        try {
-            String query = "SELECT isbn , title, publisher,publication_year , selling_price , category ,min_quantity_threshold,current_quantity," +
+            query = "SELECT isbn , title, publisher,publication_year , selling_price , category ,min_quantity_threshold,current_quantity," +
                     "JSON_ARRAYAGG(JSON_OBJECT('name', BOOK_AUTHOR.name)) as authors " +
                     "                            FROM " +
-                    "                                (BOOK join BOOK_AUTHOR on BOOK.isbn = BOOK_AUTHOR.book_id )" + "where isbn = '" + searchWords
-                    + "' OR title = '" + searchWords
+                    "                                (BOOK join BOOK_AUTHOR on BOOK.isbn = BOOK_AUTHOR.book_id )" + "where isbn = " + searchWords + " GROUP BY BOOK_AUTHOR.book_id";;
+        }
+        else{
+            query = "SELECT isbn , title, publisher,publication_year , selling_price , category ,min_quantity_threshold,current_quantity," +
+                    "JSON_ARRAYAGG(JSON_OBJECT('name', BOOK_AUTHOR.name)) as authors " +
+                    "                            FROM " +
+                    "                                (BOOK join BOOK_AUTHOR on BOOK.isbn = BOOK_AUTHOR.book_id )" +
+                    "where title = '" + searchWords
                     + "' OR publisher = '"+ searchWords
                     + "' OR publication_year = '" + searchWords
-                    + "' OR category = '" + searchWords + "GROUP BY BOOK_AUTHOR.book_id";
+                    + "' OR category = '" + searchWords + "' GROUP BY BOOK_AUTHOR.book_id";
+        }
+        try {
+
             return stmt.executeQuery(query);
         }catch(Exception e) {
             System.out.println(e.getMessage());

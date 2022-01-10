@@ -19,17 +19,21 @@ public class BooksTable extends JTable {
     Object[] colNames = {"", "Title", "Authors", " Publisher", "Year", "Price", "Category", "Quantity"};
     Object[][] data = {};
     DefaultTableModel dtm;
-    List<IBook> bookList = null;
+    List<IBook> bookList;
 
     public BooksTable(List<IBook> bookList) {
         this.bookList = bookList;
-        buildGUI();
+        buildGUI(bookList);
     }
 
-    public void buildGUI() {
-
+    public void buildGUI(List<IBook> bookList) {
+        this.bookList = bookList;
         dtm = new DefaultTableModel(data, colNames);
-
+        if (dtm.getRowCount() > 0) {
+            for (int i = dtm.getRowCount() - 1; i > -1; i--) {
+                dtm.removeRow(i);
+            }
+        }
         if(bookList == null){
             bookList = CustomerService.currentUser.getBooks();
             setModel(dtm);

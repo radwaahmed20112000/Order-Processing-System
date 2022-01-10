@@ -5,6 +5,7 @@
 package GUI;
 
 import interfaces.IBook;
+import services.BookService;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -29,11 +30,13 @@ public class BooksList extends JPanel {
     }
 
     private void ButtonSearchActionPerformed(ActionEvent e){
+        BookService service = new BookService();
         if(textSearch.getText().trim().equals(""))
             JOptionPane.showMessageDialog(invisible,"Enter a word in the search bar");
-//        List<IBook> bookList =
+        List<IBook> bookList = service.findBook(textSearch.getText().trim());
+
 //        search = new Search(MailGUI.current,textSearch.getText());
-//        myTable.buildGUI(1);
+        myBooksTable.buildGUI(bookList);
 //        if(myTable.getNumberOfMails()==0){
 //            JOptionPane.showMessageDialog(invisible, "No mail in this Folder");
 //        }
@@ -50,7 +53,7 @@ public class BooksList extends JPanel {
         filter = new JButton();
         textSearch = new JTextField();
         buttonSearch = new JButton();
-//        myBooksTable = new BooksTable(1);
+        myBooksTable = new BooksTable(null);
         scrollMails = new JScrollPane(myBooksTable);
 
         //======== this ========

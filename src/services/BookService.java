@@ -90,13 +90,16 @@ public class BookService {
         List<IBook> result  = new ArrayList<>();
         try {
            ResultSet rs = bookAccess.findBook(searchWords);
-            while(rs.next()){
-                IBook book = bookMapper(rs.getInt(1),rs.getString(2),rs.getString(3),
-                        rs.getString(4),rs.getFloat(5),
-                        rs.getString(6),rs.getInt(7),rs.getInt(8),"",
-                        "", new String[]{});
-                result.add(book);
-            }
+           if(rs!=null){
+               while(rs.next()){
+                   IBook book = bookMapper(rs.getInt(1),rs.getString(2),rs.getString(3),
+                           rs.getString(4),rs.getFloat(5),
+                           rs.getString(6),rs.getInt(7),rs.getInt(8),"",
+                           "", jsonStringToArray(rs.getString(9)));
+                   result.add(book);
+               }
+           }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
