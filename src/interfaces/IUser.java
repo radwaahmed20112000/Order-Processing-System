@@ -15,6 +15,15 @@ public class IUser {
     String phoneNumber;
     String shippingAddress;
 
+    public boolean isCustomer() {
+        return isCustomer;
+    }
+
+    public void setCustomer(boolean customer) {
+        isCustomer = customer;
+    }
+
+    boolean isCustomer;
     public String getUserName() {
         return userName;
     }

@@ -62,18 +62,13 @@ public class CustomerAccess extends Access {
                 Statement stmt = connection.createStatement();
                 ResultSet rs = stmt.executeQuery("Select * from USER where email_address = '" + emailAddress + "'");
                 rs.next();
-                int logged = rs.getInt(5);
-                if(logged != 1) {
-                    String pass = rs.getString(4);
-                    if(pass.equals(password)) {
-                        IUser user = new IUser(rs.getString(1), rs.getString(2),rs.getString(3), pass,
-                                rs.getString(5), rs.getString(6),rs.getString(7));
-                        // Loading user data ----------------
-
-
-
-                        return user;
-                    }
+                String pass = rs.getString(4);
+                if(pass.equals(password)) {
+                    IUser user = new IUser(rs.getString(1), rs.getString(2),rs.getString(3), pass,
+                            rs.getString(5), rs.getString(6),rs.getString(7));
+                    // Loading user data ----------------
+                    user.setCustomer(type);
+                    return user;
                 }
             }
         } catch(Exception e) {

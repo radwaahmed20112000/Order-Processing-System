@@ -1,5 +1,8 @@
 package GUI;
 
+import databaseAccessLayer.CustomerAccess;
+import services.CustomerService;
+
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.GroupLayout;
@@ -45,6 +48,10 @@ public class Home extends JFrame {
         ManageBooks = new JButton();
         ManageUsers = new JButton();
         ManageOrders = new JButton();
+        ManageUsers.setVisible(!CustomerService.currentUser.isCustomer());
+        ManageBooks.setVisible(!CustomerService.currentUser.isCustomer());
+        ManageOrders.setVisible(!CustomerService.currentUser.isCustomer());
+
         Logout = new JButton();
         JPanel panel1 = new JPanel();
 
@@ -183,12 +190,6 @@ public class Home extends JFrame {
         setVisible(true);
         cl.show(panel1,"1");
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
-    }
-    private void MailListTo(){
-        ManageUsers.setForeground(Color.black);
-        ManageBooks.setForeground(Color.black);
-        ManageOrders.setForeground(Color.black);
-
     }
     private JButton ManageOrders;
 
