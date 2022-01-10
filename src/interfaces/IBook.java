@@ -30,5 +30,6 @@ public interface IBook {
 
     List<IBookAuthor> getBookAuthors();
 
+    String[] getAuthorsString();
 
 }

@@ -70,6 +70,18 @@ public class Book implements IBook {
         return bookAuthors;
     }
 
+    @Override
+    public String[] getAuthorsString() {
+        List<IBookAuthor> authors =  getBookAuthors();
+        String[] a = new String[authors.size()];
+        int i =0;
+        for (IBookAuthor author: authors
+             ) {
+            a[i++] = author.getName();
+        }
+        return a;
+    }
+
 
     @Override
     public int editBook(IBook updatedBook) {

@@ -4,8 +4,12 @@
 
 package GUI;
 
+import interfaces.IBook;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.GroupLayout;
 
@@ -28,6 +32,7 @@ public class BooksList extends JPanel {
     private void ButtonSearchActionPerformed(ActionEvent e){
         if(textSearch.getText().trim().equals(""))
             JOptionPane.showMessageDialog(invisible,"Enter a word in the search bar");
+//        List<IBook> bookList =
 //        search = new Search(MailGUI.current,textSearch.getText());
 //        myTable.buildGUI(1);
 //        if(myTable.getNumberOfMails()==0){
@@ -46,12 +51,8 @@ public class BooksList extends JPanel {
         filter = new JButton();
         textSearch = new JTextField();
         buttonSearch = new JButton();
-        myBooksTable = new BooksTable(1);
+//        myBooksTable = new BooksTable(1);
         scrollMails = new JScrollPane(myBooksTable);
-        if(myBooksTable.getNumberOfMails()==0){
-            JOptionPane.showMessageDialog(invisible, "No mail in this Folder");
-        }
-
 
         //======== this ========
         setPreferredSize(new Dimension(754, 533));
