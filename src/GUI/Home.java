@@ -13,7 +13,9 @@ import javax.swing.border.*;
 /**
  * @author hyl
  */
+
 public class Home extends JFrame {
+
     public Home(){
         initComponents();
     }
@@ -87,6 +89,7 @@ public class Home extends JFrame {
         //======== this ========
         setForeground(Color.white);
         setBackground(new Color(34, 40, 49));
+
         var contentPane = getContentPane();
 
         //======== Menu ========
