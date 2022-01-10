@@ -24,17 +24,15 @@ public class Home extends JFrame {
 //
 //    }
 //
-    private void SentActionPerformed(ActionEvent e) {
-//        new UsersTable(1);
+    private void ManageUsersActionPerformed(ActionEvent e) {
+        new UsersTable(1);
     }
-//
-//    private void DraftsActionPerformed(ActionEvent e) {
-//        current = new Folder("drafts",GUISignIn.Email);
-//        myApp.setViewingOptions(current,null,new Sort("Date ( Lastest )"));
-//        EmailsList.myTable.buildGUI(1);
-//
-//    }
-//
+
+    private void ManageOrdersActionPerformed(ActionEvent e) {
+        new OrdersTable(1);
+
+    }
+
 
 //    private void contactsActionPerformed(ActionEvent e) {
 //        GUIContactsDisplay guiContactsDisplay = new GUIContactsDisplay(GUISignIn.Email);
@@ -100,7 +98,7 @@ public class Home extends JFrame {
                 ManageUsers.setContentAreaFilled(false);
                 ManageUsers.setBorder(new LineBorder(Color.white, 1, true));
                 ManageUsers.setForeground(Color.white);
-                ManageUsers.addActionListener(this::SentActionPerformed);
+                ManageUsers.addActionListener(this::ManageUsersActionPerformed);
 
                 //---- ManageOrders ----
                 ManageOrders.setText("Manage orders");
@@ -108,7 +106,7 @@ public class Home extends JFrame {
                 ManageOrders.setContentAreaFilled(false);
                 ManageOrders.setBorder(new LineBorder(Color.white, 1, true));
                 ManageOrders.setForeground(Color.white);
-//                ManageOrders.addActionListener(this::DraftsActionPerformed);
+                ManageOrders.addActionListener(this::ManageOrdersActionPerformed);
 
                 GroupLayout panel3Layout = new GroupLayout(panel3);
                 panel3.setLayout(panel3Layout);
