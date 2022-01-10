@@ -72,23 +72,23 @@ public class Home extends JFrame {
         // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
         // Generated using JFormDesigner Evaluation license - hyl
         JPanel Menu = new JPanel();
-        JButton Cart = new JButton();
+        mybutton Cart = new mybutton("Cart");
         JPanel panel3 = new JPanel();
-        ManageBooks = new JButton();
-        ManageUsers = new JButton();
+        ManageBooks = new mybutton("Manage books");
+        ManageUsers = new mybutton("Manage users");
         JPanel panel1 = new JPanel();
 //        App myApp = new App();
 //        myApp.setViewingOptions(MailGUI.current,null,new Sort("Date ( Lastest )"));
 
         //======== this ========
         setForeground(Color.white);
-        setBackground(new Color(34, 40, 49));
+        setBackground(new Color(253, 232, 215));
         var contentPane = getContentPane();
 
         //======== Menu ========
         {
             Menu.setBorder(new LineBorder(Color.white));
-            Menu.setBackground(new Color(34, 40, 49));
+            Menu.setBackground(new Color(253, 232, 215));
             Menu.setForeground(Color.white);
 
             //---- Cart ----
@@ -103,22 +103,22 @@ public class Home extends JFrame {
                 panel3.setForeground(Color.white);
 
                 //---- ManageBooks ----
-                ManageBooks.setText("Manage books");
-                ManageBooks.setOpaque(false);
-                ManageBooks.setContentAreaFilled(false);
-                ManageBooks.setBorder(new LineBorder(Color.white, 1, true));
-                ManageBooks.setForeground(Color.white);
-//                ManageBooks.addActionListener(e -> {
-//                    InboxActionPerformed(e);
-//                    InboxActionPerformed(e);
-//                });
+//                ManageBooks.setText("Manage books");
+//                ManageBooks.setOpaque(false);
+//                ManageBooks.setContentAreaFilled(false);
+//                ManageBooks.setBorder(new LineBorder(Color.white, 1, true));
+//                ManageBooks.setForeground(Color.white);
+                ManageBooks.addActionListener(e -> {
+                 //   InboxActionPerformed(e);
+                 //   InboxActionPerformed(e);
+                });
 
                 //---- ManageUsers ----
-                ManageUsers.setText("Manage users");
-                ManageUsers.setOpaque(false);
-                ManageUsers.setContentAreaFilled(false);
-                ManageUsers.setBorder(new LineBorder(Color.white, 1, true));
-                ManageUsers.setForeground(Color.white);
+//                ManageUsers.setText("Manage users");
+//                ManageUsers.setOpaque(false);
+//                ManageUsers.setContentAreaFilled(false);
+//                ManageUsers.setBorder(new LineBorder(Color.white, 1, true));
+//                ManageUsers.setForeground(Color.white);
                 ManageUsers.addActionListener(this::SentActionPerformed);
 
                 GroupLayout panel3Layout = new GroupLayout(panel3);
