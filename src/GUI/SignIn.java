@@ -1,5 +1,7 @@
 package GUI;
 
+import services.CustomerService;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,14 +17,20 @@ public class SignIn extends JFrame implements ActionListener {
     private JTextField mailField;
     private JLabel password;
     private JPasswordField passwordField;
+    private JLabel userType;
+    private JRadioButton customer;
+    private JRadioButton manager;
+    private ButtonGroup btnGroup;
     private JButton signIn;
     private JButton reset;
     private JLabel signUpLabel;
+    private JButton signUp;
+    private JLabel result;
 
     public SignIn() {
         /* Create Main Frame */
         setTitle("Welcome to our Book Store");
-        setBounds(400, 100, 550, 400);
+        setBounds(400, 100, 550, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
 
@@ -59,39 +67,89 @@ public class SignIn extends JFrame implements ActionListener {
         passwordField.setLocation(220, 180);
         container.add(passwordField);
 
+        userType = new JLabel("Type");
+        userType.setFont(new Font("Georgia", Font.PLAIN, 18));
+        userType.setSize(100, 28);
+        userType.setLocation(100, 230);
+        container.add(userType);
+
+        customer = new JRadioButton("Customer");
+        customer.setFont(new Font("Arial", Font.PLAIN, 16));
+        customer.setSelected(true);
+        customer.setSize(100, 28);
+        customer.setLocation(220, 230);
+        container.add(customer);
+
+        manager = new JRadioButton("Manager");
+        manager.setFont(new Font("Arial", Font.PLAIN, 16));
+        manager.setSelected(false);
+        manager.setSize(100, 28);
+        manager.setLocation(330, 230);
+        container.add(manager);
+
+        btnGroup = new ButtonGroup();
+        btnGroup.add(customer);
+        btnGroup.add(manager);
+
         signIn = new JButton("Sign In");
         signIn.setFont(new Font("Arial", Font.PLAIN, 15));
         signIn.setSize(100, 25);
-        signIn.setLocation(160, 250);
+        signIn.setLocation(160, 300);
         signIn.addActionListener(this);
         container.add(signIn);
 
         reset = new JButton("Reset");
         reset.setFont(new Font("Arial", Font.PLAIN, 15));
         reset.setSize(100, 25);
-        reset.setLocation(300, 250);
+        reset.setLocation(300, 300);
         reset.addActionListener(this);
         container.add(reset);
 
         signUpLabel = new JLabel("Didn't sign up?");
         signUpLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         signUpLabel.setSize(120, 28);
-        signUpLabel.setLocation(170, 300);
+        signUpLabel.setLocation(170, 350);
         container.add(signUpLabel);
 
-        reset = new JButton("Sign Up");
-        reset.setFont(new Font("Arial", Font.PLAIN, 15));
-        reset.setSize(100, 25);
-        reset.setLocation(280, 300);
-        reset.addActionListener(this);
-        container.add(reset);
+        signUp = new JButton("Sign Up");
+        signUp.setFont(new Font("Arial", Font.PLAIN, 15));
+        signUp.setSize(100, 25);
+        signUp.setLocation(280, 350);
+        signUp.addActionListener(this);
+        container.add(signUp);
+
+        result = new JLabel();
+        result.setFont(new Font("Arial", Font.PLAIN, 14));
+        result.setSize(120, 28);
+        result.setLocation(170, 400);
+        container.add(result);
 
         setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        CustomerService obj = new CustomerService();
+        if (e.getSource() == signIn) {
+            String mail = mailField.getText();
+            char[] pass = passwordField.getPassword();
+            String password = String.valueOf(pass);
+            boolean type = customer.isSelected();
+            if(obj.signIn(mail,password,type)) {
+                setVisible(false);
+                Home homeObj = new Home();
+                result.setText("Sign In Successfully..");
+            } else {
+                result.setText("Sign In failed..");
+            }
+        } else if (e.getSource() == reset) {
+            String def = "";
+            mailField.setText(def);
+            passwordField.setText(def);
+        } else if(e.getSource() == signUp) {
+            setVisible(false);
+            SignUp signObj = new SignUp();
+        }
     }
 
     public static void main(String[] args) {

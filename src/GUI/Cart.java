@@ -36,7 +36,7 @@ public class Cart extends JFrame implements ActionListener {
         back.setText("Back");
         back.setIconTextGap(10);
         back.setFont(new Font("Arial", Font.PLAIN, 16));
-        back.setSize(110, 40);
+        back.setSize(110, 35);
         back.setLocation(15, 15);
         back.addActionListener(this);
         container.add(back);
@@ -112,12 +112,12 @@ public class Cart extends JFrame implements ActionListener {
     }
 
     public Component searchItem(String item) {
-        for(int i=0; i<containers.size(); i++) {
+        for (Container value : containers) {
             try {
-                Component[] components = containers.get(i).getComponents();
+                Component[] components = value.getComponents();
                 JLabel itemLabel = (JLabel) components[0];
-                if(itemLabel.getText().equals(item)) {
-                    return containers.get(i);
+                if (itemLabel.getText().equals(item)) {
+                    return value;
                 }
             } catch (Exception e) {
                 e.printStackTrace();

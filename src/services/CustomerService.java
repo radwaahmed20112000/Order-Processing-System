@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class CustomerService {
     CustomerAccess customerAccess = new CustomerAccess();
-    IUser currentUser;
+    static IUser currentUser;
 
     public boolean signUp(String firstName,
                           String lastName,
