@@ -1,5 +1,6 @@
 package GUI;
 
+import interfaces.IUser;
 import services.CustomerService;
 
 import java.awt.*;
@@ -198,6 +199,9 @@ public class SignUp extends JFrame implements ActionListener {
             boolean type = customer.isSelected();
             if(obj.signUp(firstName,lastName,password,mail,phoneNumber,shippingAddress,type,userName)) {
                 result.setText("Register Successfully..");
+                dispose();
+                IUser user = new IUser (firstName,lastName ,password,mail,phoneNumber,shippingAddress,userName);
+                UserProfile userProfile = new UserProfile(user);
             } else {
                 result.setText("Register failed..");
             }

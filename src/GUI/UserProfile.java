@@ -93,19 +93,24 @@ public class UserProfile extends JFrame {
         mybutton btnLogOut = new mybutton("Log Out");
         btnLogOut.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                UserProfile.this.dispose();
+                user.logOut();
+                dispose();
             }
         });
         btnLogOut.setBounds(650, 11, 80, 23);
         this.contentPane.add(btnLogOut);
+
         mybutton btnCart = new mybutton("Cart");
-        btnLogOut.addActionListener(new ActionListener() {
+        btnCart.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                UserProfile.this.dispose();
+                dispose();
+                Cart c = new Cart(user.getCart());
+
             }
         });
         btnCart.setBounds(550, 11, 80, 23);
         this.contentPane.add(btnCart);
+
         mybutton btnRegister = new mybutton("Save!");
         btnRegister.setBounds(104, 275, 200, 23);
         btnRegister.addActionListener(new ActionListener() {
@@ -149,7 +154,9 @@ public class UserProfile extends JFrame {
         mybutton btnHome = new mybutton("Home");
         btnHome.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                UserProfile.this.dispose();
+
+                dispose();
+                Home h = new Home();
             }
         });
         btnHome.setBounds(350, 275, 200, 23);

@@ -46,4 +46,12 @@ public class CustomerService {
         }
         return res;
     }
+
+    public void logOut (String email){
+        try {
+             customerAccess.logOut(email);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

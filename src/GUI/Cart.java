@@ -1,5 +1,9 @@
 package GUI;
 
+import interfaces.ICart;
+import models.CartManager;
+import services.CustomerService;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,35 +18,47 @@ public class Cart extends JFrame implements ActionListener {
     private JButton back;
     private Container itemsContainer;
     private JScrollPane scrollPane;
-    private JButton checkout;
-
+    private mybutton checkout;
+    JTextField textField_1;
+    ICart cart ;
     private List<String> items;
     private List<Container> containers = new ArrayList<>();
 
-    public Cart(List items) {
-        this.items = items;
+    public Cart(ICart cart ) {
+        this.cart = cart;
+        this.items = cart.viewCartDetails();
 
         /* Create Main Frame */
         setTitle("Book Store");
-        setBounds(300, 100, 800, 600);
+        setBounds(300, 100, 900, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
 
         container = getContentPane();
         container.setLayout(null);
+        container.setBackground(new Color(253, 232, 215));
+
 
         Icon backIcon = new ImageIcon("src/GUI/Icons/left-arrow.png");
         back = new JButton(backIcon);
         back.setText("Back");
         back.setIconTextGap(10);
         back.setFont(new Font("Arial", Font.PLAIN, 16));
+        back.setBackground(new Color(153, 102, 128));
         back.setSize(110, 35);
         back.setLocation(15, 15);
-        back.addActionListener(this);
+        back.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+               UserProfile user = new UserProfile(CustomerService.currentUser);
+
+            }
+        });
         container.add(back);
 
         itemsContainer = new JPanel();
-        itemsContainer.setSize(700,50*items.size());
+        itemsContainer.setSize(900,30*items.size());
+
         // configure the container as a box layout
         BoxLayout boxLayout = new BoxLayout(itemsContainer, BoxLayout.Y_AXIS);
         itemsContainer.setLayout(boxLayout);
@@ -52,105 +68,99 @@ public class Cart extends JFrame implements ActionListener {
             itemsContainer.add(newItem);
         }
         scrollPane = new JScrollPane(itemsContainer);
-        scrollPane.setSize(700,420);
+        scrollPane.setSize(800,420);
         scrollPane.setLocation(50,70);
         container.add(scrollPane);
 
-        checkout = new JButton("Checkout");
-        checkout.setBackground(Color.green);
-        checkout.setFont(new Font("Georgia", Font.PLAIN, 18));
+        checkout = new mybutton("Checkout");
         checkout.setSize(120, 40);
         checkout.setLocation(600, 500);
-        checkout.addActionListener(this);
+        checkout.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                cart.buyCart();
+                }
+        });
         container.add(checkout);
+
+
+        JLabel itemLabel4 = new JLabel(String.valueOf("Total price : "+ cart.getCartPrice()));
+        itemLabel4.setFont(new Font("Georgia", Font.PLAIN, 20));
+        itemLabel4.setSize(250, 50);
+        itemLabel4.setLocation(400, 500);
+        container.add(itemLabel4);
 
         setVisible(true);
     }
 
     public Container createItem(String item) {
+        String[] itemDetails = item.split(":");
+
         Container itemContainer = new JPanel();
-        itemContainer.setSize(500,50);
+        itemContainer.setSize(800,50);
         // configure the container as a flow layout
-        FlowLayout flowLayout = new FlowLayout(FlowLayout.CENTER, 80, 5);
+        FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT, 20, 3);
         itemContainer.setLayout(flowLayout);
 
-        JLabel itemLabel = new JLabel(item);
-        itemLabel.setFont(new Font("Georgia", Font.PLAIN, 20));
-        itemLabel.setSize(250, 50);
-        itemContainer.add(itemLabel);
+        String itemShowTitle = "Book Title: " + itemDetails[1];
+        JLabel itemLabel1 = new JLabel(itemShowTitle );
+        itemLabel1.setFont(new Font("Georgia", Font.PLAIN, 20));
+        itemLabel1.setSize(250, 50);
+        itemContainer.add(itemLabel1);
+
+        String itemShowPrice = "Book Price: "+itemDetails[2];
+        JLabel itemLabel2 = new JLabel(itemShowPrice );
+        itemLabel2.setFont(new Font("Georgia", Font.PLAIN, 20));
+        itemLabel2.setSize(250, 50);
+        itemContainer.add(itemLabel2);
+
+        String itemShowCount = "Count: "+itemDetails[3];
+        JLabel itemLabel3 = new JLabel(itemShowPrice );
+        itemLabel3.setFont(new Font("Georgia", Font.PLAIN, 20));
+        itemLabel3.setSize(250, 50);
+        itemContainer.add(itemLabel3);
 
         Container controls = new JPanel();
 
-        Icon incrementIcon = new ImageIcon("src/GUI/Icons/plus.png");
-        JButton increment = new JButton(incrementIcon);
-        increment.setSize(20, 20);
-        increment.setMargin(new Insets(2,2,2,2));
-        increment.addActionListener(this);
-        controls.add(increment);
 
-        JLabel amount = new JLabel("0");
-        amount.setFont(new Font("Georgia", Font.PLAIN, 20));
-        amount.setSize(50, 20);
-        controls.add(amount);
+        this.textField_1 = new JTextField();
+        this.textField_1.setSize( 20, 20);
+        this.textField_1.setText(itemDetails[3]);
+        controls.add(this.textField_1);
+        this.textField_1.setColumns(10);
 
-        Icon decrementIcon = new ImageIcon("src/GUI/Icons/minus.png");
-        JButton decrement = new JButton(decrementIcon);
-        decrement.setSize(20, 20);
-        decrement.setMargin(new Insets(2,2,2,2));
-        decrement.addActionListener(this);
-        controls.add(decrement);
+
+
+        JButton btnUpdate = new JButton("Go");
+        btnUpdate.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                int count = 0;
+                if(!textField_1.getText().equals("")){
+                      count = Integer.parseInt(textField_1.getText());
+                      System.out.println(count);
+                      cart.editCartBookCount(Integer.parseInt(itemDetails[0]),count);
+                    dispose();
+                    Cart c = new Cart(cart);
+            }}
+        });
+        controls.add(btnUpdate);
+
+        JButton btnremove = new JButton("remove");
+        btnremove.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                cart.removeFromCart(Integer.parseInt(itemDetails[0]));
+                dispose();
+                Cart c = new Cart(cart);
+            }
+        });
+        controls.add(btnremove);
 
         itemContainer.add(controls);
-
         return itemContainer;
     }
 
-    public void addItem(String item) {
-        this.items.add(item);
-        Container addedItem = createItem(item);
-        itemsContainer.add(addedItem);
-    }
-
-    public Component searchItem(String item) {
-        for (Container value : containers) {
-            try {
-                Component[] components = value.getComponents();
-                JLabel itemLabel = (JLabel) components[0];
-                if (itemLabel.getText().equals(item)) {
-                    return value;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
-
-    public void removeItem(String item) {
-        this.items.remove(item);
-        Component removedItem = searchItem(item);
-        itemsContainer.remove(removedItem);
-    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
-    }
-
-    public static void main(String[] args) {
-        List<String> items = new ArrayList<>();
-        items.add("book1");
-        items.add("book2");
-        items.add("book3");
-        items.add("book4");
-        items.add("book5");
-        items.add("book6");
-        items.add("book7");
-        items.add("book8");
-        items.add("book9");
-        items.add("book10");
-
-        Cart obj = new Cart(items);
-        //obj.removeItem("book6");
     }
 }
