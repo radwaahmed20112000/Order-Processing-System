@@ -23,7 +23,6 @@ public class ManagerAccess extends Access{
         java.sql.Date currentDate = new java.sql.Date(millis);
         BookAccess bookAccess = new BookAccess();
         try {
-            //TODO : UPDATE Book Quantity
             stmt.executeUpdate("INSERT INTO SUPPLIER_ORDER values('" + bookId + "','" + requiredQuantity + "','" +
                     currentDate + "')");
             return "Order is Placed Successfully";
@@ -58,14 +57,59 @@ public class ManagerAccess extends Access{
         }
         return false;
     }
-    public void viewTotalSalesInMonth(){
 
+    /**
+     *
+     * @return The total sales for books in the previous month
+     */
+    public ResultSet viewTotalSalesInMonth(){
+        try {
+            return stmt.executeQuery("SELECT * FROM CLIENT_ORDER, CLIENT_ORDER_DETAILS " +
+                    "WHERE CLIENT_ORDER_DETAILS.order_id=CLIENT_ORDER.order_id AND " +
+                    "CLIENT_ORDER.order_date BETWEEN SUBDATE(CURDATE(), INTERVAL 1 MONTH) AND NOW()" );
+        }catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
-    public void topFiveCustomers(){
 
+    /**
+     * @return The top 5 customers who purchase the most purchase
+     * amount in descending order for the last three months
+     */
+
+    public ResultSet topFiveCustomers(){
+        try {
+            return stmt.executeQuery("SELECT SUM(CLIENT_ORDER_DETAILS.order_count) as count, user_email " +
+                    "FROM CLIENT_ORDER, CLIENT_ORDER_DETAILS " +
+                    "WHERE CLIENT_ORDER_DETAILS.order_id=CLIENT_ORDER.order_id AND " +
+                    "CLIENT_ORDER.order_date BETWEEN SUBDATE(CURDATE(), INTERVAL 3 MONTH) AND NOW() " +
+                    "GROUP BY user_email " +
+                    "order by count DESC " +
+                    "LIMIT 5");
+        }catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
-    //in last 3 months
-    public void topSellingBooks(){
 
+    /**
+     * @return top 10 selling books for the last three months
+     */
+    public ResultSet topSellingBooks(){
+        try {
+            return stmt.executeQuery("SELECT SUM(CLIENT_ORDER_DETAILS.order_count) as count, " +
+                    "title FROM CLIENT_ORDER, CLIENT_ORDER_DETAILS, BOOK " +
+                    "FROM CLIENT_ORDER, CLIENT_ORDER_DETAILS " +
+                    "WHERE CLIENT_ORDER_DETAILS.order_id=CLIENT_ORDER.order_id AND " +
+                    "BOOK.isbn = CLIENT_ORDER_DETAILS.book_id AND " +
+                    "CLIENT_ORDER.order_date BETWEEN SUBDATE(CURDATE(), INTERVAL 3 MONTH) AND NOW() " +
+                    "GROUP BY book_id " +
+                    "order by count DESC " +
+                    "LIMIT 10");
+        }catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }

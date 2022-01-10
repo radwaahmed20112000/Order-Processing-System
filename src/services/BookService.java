@@ -3,8 +3,10 @@ package services;
 import builders.BookBuilder;
 import databaseAccessLayer.BookAccess;
 import interfaces.IBook;
+import interfaces.IBookAuthor;
 
 
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,42 +17,65 @@ public class BookService {
     BookAccess  bookAccess = new BookAccess();
 
     public IBook bookMapper(int newBookId, String newTitle, String newPublisherName, String newPublicationYear,
-                            float newSellingPrice, String newCategory, int newMinQuantity, int newCurrentQuantity){
+                            float newSellingPrice, String newCategory, int newMinQuantity, int newCurrentQuantity,
+                            String publisherAddress, String publisherPhone, String[] authors){
 
 
         BookBuilder newBookBuilder = new BookBuilder();
         newBookBuilder.setBookId(newBookId);
         newBookBuilder.setTitle(newTitle);
         newBookBuilder.setPublisherName(newPublisherName);
-        newBookBuilder.setPublisherAddress("");
-        newBookBuilder.setPublisherTelephoneNum("");
+        newBookBuilder.setPublisherAddress(publisherAddress);
+        newBookBuilder.setPublisherTelephoneNum(publisherPhone);
         newBookBuilder.setPublicationYear(newPublicationYear);
         newBookBuilder.setSellingPrice(newSellingPrice);
         newBookBuilder.setCategory(newCategory);
         newBookBuilder.setMinQuantity(newMinQuantity);
         newBookBuilder.setCurrentQuantity(newCurrentQuantity);
+        newBookBuilder.setBookAuthors(authors);
 
         return newBookBuilder.generateBook();
     }
 
-//    public int editBook(IBook oldBook , IBook newBook){
-//        return bookAccess.editBook(oldBook.getBookId(),newBook.getBookId(), newBook.getTitle(),
-//                newBook.getPublisher().getName(),newBook.getPublisher().getAddress(),
-//                newBook.getPublisher().getTelephoneNumber(),newBook.getPublicationYear(),
-//                newBook.getSellingPrice(),newBook.getCategory(),newBook.getMinQuantity(),newBook.getCurrentQuantity());
-//
-//    }
-//    public int editBookAuthor(IBook oldBook , IBookAuthor[] updatedBookAuthors){
-//        //loop for all the authors to detect which one updated
-//        for(int i = 0 ; i< updatedBookAuthors.length;i++){
-//           if(oldBook.getBookAuthors()[i].equals(updatedBookAuthors[i]) == false){
-//               int res =bookAccess.editBookAuthor(oldBook.getBookId(),oldBook.getBookAuthors()[i].getName(),
-//                       updatedBookAuthors[i].getName());
-//               if (res == -1) ; return res;
-//           }
-//        }
-//       return 1;
-//    }
+    public boolean editBook(IBook oldBook , IBook newBook){
+        return bookAccess.editBook(oldBook.getBookId(), newBook.getBookId(), newBook.getTitle(),
+                newBook.getPublisher().getName(), newBook.getPublicationYear(),
+                newBook.getSellingPrice(), newBook.getCategory(), newBook.getMinQuantity(),
+                newBook.getCurrentQuantity())
+                && bookAccess.editPublisher(oldBook.getPublisher().getName(), newBook.getPublisher().getName(),
+                newBook.getPublisher().getAddress(), newBook.getPublisher().getTelephoneNumber())
+                && editBookAuthor(oldBook, newBook);
+    }
+    public boolean editBookAuthor(IBook oldBook , IBook newBook){
+        List<IBookAuthor> union = new ArrayList<>(oldBook.getBookAuthors());
+        union.addAll(newBook.getBookAuthors());
+        List<IBookAuthor> intersection = new ArrayList<>(oldBook.getBookAuthors());
+        intersection.retainAll(newBook.getBookAuthors());
+        union.removeAll(intersection);
+
+        boolean edit = true;
+        for (IBookAuthor author : union)
+            edit = edit && bookAccess.addAuthor(newBook.getBookId(), author.getName());
+       return edit;
+    }
+    public IBook findBookDetails(int bookId) {
+        try {
+            ResultSet authors = bookAccess.findBookAuthors(bookId);
+            List<String> bookAuthors = new ArrayList<>();
+            while (authors.next()) {
+                bookAuthors.add(authors.getString(1));
+            }
+            ResultSet rs = bookAccess.findBookDetailsById(bookId);
+            rs.next();
+            return bookMapper(rs.getInt(1),rs.getString(2),rs.getString(3),
+                    rs.getString(4),rs.getFloat(5),
+                    rs.getString(6),rs.getInt(7),rs.getInt(8),
+                    rs.getString(10), rs.getString(11), bookAuthors.toArray(new String[0]));
+        } catch (Exception ignored){
+            ignored.printStackTrace();
+        }
+        return null;
+    }
     public int editBookQuantity (int bookId , int newCount){
         //sql update query
         int res;
@@ -66,7 +91,8 @@ public class BookService {
             while(rs.next()){
                 IBook book = bookMapper(rs.getInt(1),rs.getString(2),rs.getString(3),
                         rs.getString(4),rs.getFloat(5),
-                        rs.getString(6),rs.getInt(7),rs.getInt(8));
+                        rs.getString(6),rs.getInt(7),rs.getInt(8),"",
+                        "", new String[]{});
                 result.add(book);
             }
         } catch (SQLException e) {
@@ -83,7 +109,8 @@ public class BookService {
             if (rs.next()){
                 book = bookMapper(rs.getInt(1),rs.getString(2),rs.getString(3),
                     rs.getString(4),rs.getFloat(5),
-                    rs.getString(6),rs.getInt(7),rs.getInt(8));
+                    rs.getString(6),rs.getInt(7),rs.getInt(8), "", "",
+                        new String[]{});
                 return book;
             }
         } catch (SQLException e) {

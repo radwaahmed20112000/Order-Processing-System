@@ -2,19 +2,24 @@ package services;
 
 import builders.BookBuilder;
 import databaseAccessLayer.CartAccess;
+import databaseAccessLayer.OrderAccess;
 import interfaces.IBook;
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class CartService {
     CartAccess cartAccess;
+    OrderAccess orderAccess;
     BookService bookService;
     public CartService(){
     cartAccess = new CartAccess();
     bookService = new BookService();
+    orderAccess = new OrderAccess();
     }
    public IBook bookIdMapper(int bookId){
        BookBuilder bookBuilder = new BookBuilder();
@@ -78,10 +83,58 @@ public class CartService {
     }
 
     public List<String> viewCart(String email){
-        cartAccess.viewCart(email);
-        return null;
+        List<String>res = new ArrayList<>();
+        try {
+            ResultSet rs = cartAccess.viewCart(email);
+            while(rs.next()){
+                String s = rs.getInt(2)+":"+rs.getInt(3);
+                res.add(s);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return res;
     }
+    public void buyCart(String email) {
+        try {
+            orderAccess.addOrder(email);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        List<String> cartItems = viewCart(email);
+        for (String Item : cartItems) {
+            int bookId = Integer.parseInt(Item.substring(0, Item.indexOf(':')));
+            int count = Integer.parseInt(Item.substring(Item.indexOf(':') + 1, Item.length()));
+            try {
+                orderAccess.addOrderItem(email,bookId,count);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public float getCartPrice(String email){
-        return cartAccess.getCartPrice(email);
+        List<String> cartItems = viewCart(email);
+        float price = 0;
+        for(String Item : cartItems){
+            int bookId = Integer.parseInt(Item.substring(0,Item.indexOf(':')));
+            int count = Integer.parseInt(Item.substring(Item.indexOf(':')+1,Item.length()));
+            IBook book = bookService.findBookById(bookId);
+            price += book.getSellingPrice()* count;
+        }
+        return price;
+    }
+    public List<String> viewCartDetails(String email){
+        List<String> cartItems = viewCart(email);
+        List<String> result = new ArrayList<>();
+        for(String Item : cartItems){
+            int bookId = Integer.parseInt(Item.substring(0,Item.indexOf(':')));
+            int count = Integer.parseInt(Item.substring(Item.indexOf(':')+1,Item.length()));
+            IBook book = bookService.findBookById(bookId);
+           String temp = book.getTitle()+":"+book.getCurrentQuantity()+":"+book.getSellingPrice();
+           result.add(temp);
+        }
+        return result;
     }
 }
