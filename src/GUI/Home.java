@@ -1,7 +1,3 @@
-/*
- * Created by JFormDesigner on Sat Apr 25 05:13:09 EET 2020
- */
-
 package GUI;
 
 import java.awt.event.*;
@@ -10,20 +6,13 @@ import javax.swing.GroupLayout;
 import java.awt.*;
 import javax.swing.border.*;
 
-/**
- * @author hyl
- */
 public class Home extends JFrame {
     public Home(){
         initComponents();
     }
 
 //    App myApp = new App();
-//    private void filterActionPerformed(ActionEvent e) {
-//        FilterMenu filterMenu = new FilterMenu();
-//        filterMenu.setVisible(true);
-//
-//    }
+
 //    private void composeActionPerformed(ActionEvent e) {
 //        GUICompose compose =new GUICompose();
 //    }
@@ -46,21 +35,11 @@ public class Home extends JFrame {
 //
 //    }
 //
-//
-//    private void TrashActionPerformed(ActionEvent e) {
-//        current = new Folder("trash",GUISignIn.Email);
-//        myApp.setViewingOptions(current,null,new Sort("Date ( Lastest )"));
-//        EmailsList.myTable.buildGUI(1);
-//
-//
-//    }
+
 //    private void contactsActionPerformed(ActionEvent e) {
 //        GUIContactsDisplay guiContactsDisplay = new GUIContactsDisplay(GUISignIn.Email);
 //    }
 
-    private void FiltersActionPerformed(ActionEvent e) {
-        // TODO add your code here
-    }
 
    /* private void createUIComponents() {
         thumb = new JLabel(new ImageIcon("81kTrSqMuLL._AC_SL1135_.jpg")) ;   }
@@ -72,23 +51,25 @@ public class Home extends JFrame {
         // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
         // Generated using JFormDesigner Evaluation license - hyl
         JPanel Menu = new JPanel();
-        mybutton Cart = new mybutton("Cart");
+        JButton Cart = new JButton();
         JPanel panel3 = new JPanel();
-        ManageBooks = new mybutton("Manage books");
-        ManageUsers = new mybutton("Manage users");
+        ManageBooks = new JButton();
+        ManageUsers = new JButton();
+        ManageOrders = new JButton();
+        Logout = new JButton();
         JPanel panel1 = new JPanel();
 //        App myApp = new App();
 //        myApp.setViewingOptions(MailGUI.current,null,new Sort("Date ( Lastest )"));
 
         //======== this ========
         setForeground(Color.white);
-        setBackground(new Color(253, 232, 215));
+        setBackground(new Color(34, 40, 49));
         var contentPane = getContentPane();
 
         //======== Menu ========
         {
             Menu.setBorder(new LineBorder(Color.white));
-            Menu.setBackground(new Color(253, 232, 215));
+            Menu.setBackground(new Color(34, 40, 49));
             Menu.setForeground(Color.white);
 
             //---- Cart ----
@@ -103,23 +84,31 @@ public class Home extends JFrame {
                 panel3.setForeground(Color.white);
 
                 //---- ManageBooks ----
-//                ManageBooks.setText("Manage books");
-//                ManageBooks.setOpaque(false);
-//                ManageBooks.setContentAreaFilled(false);
-//                ManageBooks.setBorder(new LineBorder(Color.white, 1, true));
-//                ManageBooks.setForeground(Color.white);
-                ManageBooks.addActionListener(e -> {
-                 //   InboxActionPerformed(e);
-                 //   InboxActionPerformed(e);
-                });
+                ManageBooks.setText("Manage books");
+                ManageBooks.setOpaque(false);
+                ManageBooks.setContentAreaFilled(false);
+                ManageBooks.setBorder(new LineBorder(Color.white, 1, true));
+                ManageBooks.setForeground(Color.white);
+//                ManageBooks.addActionListener(e -> {
+//                    InboxActionPerformed(e);
+//                    InboxActionPerformed(e);
+//                });
 
                 //---- ManageUsers ----
-//                ManageUsers.setText("Manage users");
-//                ManageUsers.setOpaque(false);
-//                ManageUsers.setContentAreaFilled(false);
-//                ManageUsers.setBorder(new LineBorder(Color.white, 1, true));
-//                ManageUsers.setForeground(Color.white);
+                ManageUsers.setText("Manage users");
+                ManageUsers.setOpaque(false);
+                ManageUsers.setContentAreaFilled(false);
+                ManageUsers.setBorder(new LineBorder(Color.white, 1, true));
+                ManageUsers.setForeground(Color.white);
                 ManageUsers.addActionListener(this::SentActionPerformed);
+
+                //---- ManageOrders ----
+                ManageOrders.setText("Manage orders");
+                ManageOrders.setOpaque(false);
+                ManageOrders.setContentAreaFilled(false);
+                ManageOrders.setBorder(new LineBorder(Color.white, 1, true));
+                ManageOrders.setForeground(Color.white);
+//                ManageOrders.addActionListener(this::DraftsActionPerformed);
 
                 GroupLayout panel3Layout = new GroupLayout(panel3);
                 panel3.setLayout(panel3Layout);
@@ -130,6 +119,7 @@ public class Home extends JFrame {
                                         .addGroup(panel3Layout.createParallelGroup()
                                                 .addComponent(ManageUsers, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(ManageBooks, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(ManageOrders, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addGroup(GroupLayout.Alignment.TRAILING, panel3Layout.createSequentialGroup()
                                                         .addGap(0, 0, Short.MAX_VALUE)))
                                         .addContainerGap())
@@ -140,9 +130,19 @@ public class Home extends JFrame {
                                         .addComponent(ManageBooks)
                                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(ManageUsers)
+                                        .addComponent(ManageOrders)
                                         .addContainerGap())
                 );
             }
+
+            //---- Logout ----
+            Logout.setText("Logout");
+            Logout.setOpaque(false);
+            Logout.setContentAreaFilled(false);
+            Logout.setBorder(new LineBorder(Color.white, 1, true));
+            Logout.setForeground(Color.white);
+//            Logout.addActionListener(this::contactsActionPerformed);
+
             GroupLayout MenuLayout = new GroupLayout(Menu);
             Menu.setLayout(MenuLayout);
             MenuLayout.setHorizontalGroup(
@@ -151,6 +151,7 @@ public class Home extends JFrame {
                             .addGroup(MenuLayout.createSequentialGroup()
                                     .addContainerGap()
                                     .addGroup(MenuLayout.createParallelGroup()
+                                            .addComponent(Logout, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE)
                                             .addComponent(Cart, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE))
                                     .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             );
@@ -162,6 +163,7 @@ public class Home extends JFrame {
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(panel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
+                                    .addComponent(Logout)
                                     .addContainerGap(264, Short.MAX_VALUE))
             );
         }
@@ -198,10 +200,14 @@ public class Home extends JFrame {
     private void MailListTo(){
         ManageUsers.setForeground(Color.black);
         ManageBooks.setForeground(Color.black);
+        ManageOrders.setForeground(Color.black);
+
     }
+    private JButton ManageOrders;
 
     private JButton ManageBooks;
     private JButton ManageUsers;
+    private JButton Logout;
 
 //    public static Folder current = new Folder("inbox",GUISignIn.Email);
     // JFormDesigner - End of variables declaration  //GEN-END:variables
