@@ -3,7 +3,8 @@ package databaseAccessLayer;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 
 public class ManagerAccess extends Access{
@@ -19,12 +20,9 @@ public class ManagerAccess extends Access{
     }
 
     public String placeOrder(int bookId, int requiredQuantity){
-        long millis = System.currentTimeMillis();
-        java.sql.Date currentDate = new java.sql.Date(millis);
-        BookAccess bookAccess = new BookAccess();
         try {
             stmt.executeUpdate("INSERT INTO SUPPLIER_ORDER values('" + bookId + "','" + requiredQuantity + "','" +
-                    currentDate + "')");
+                    Timestamp.valueOf(LocalDateTime.now()) + "')");
             return "Order is Placed Successfully";
         }catch(Exception e) {
             return e.getMessage();
@@ -42,7 +40,7 @@ public class ManagerAccess extends Access{
 
     public ResultSet viewAllCustomers(){
         try {
-            return stmt.executeQuery("SELECT * FROM CUSTOMER");
+            return stmt.executeQuery("SELECT * FROM USER");
         }catch(Exception e) {
             System.out.println(e.getMessage());
         }
@@ -96,7 +94,7 @@ public class ManagerAccess extends Access{
     /**
      * @return top 10 selling books for the last three months
      */
-    public ResultSet topSellingBooks(){
+    public ResultSet topSellingBooks() {
         try {
             return stmt.executeQuery("SELECT SUM(CLIENT_ORDER_DETAILS.order_count) as count, " +
                     "title FROM CLIENT_ORDER, CLIENT_ORDER_DETAILS, BOOK " +
