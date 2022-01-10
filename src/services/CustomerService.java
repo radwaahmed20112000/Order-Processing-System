@@ -3,6 +3,8 @@ package services;
 import databaseAccessLayer.CustomerAccess;
 import interfaces.IUser;
 
+import java.sql.SQLException;
+
 public class CustomerService {
     CustomerAccess customerAccess = new CustomerAccess();
     IUser currentUser;
@@ -34,10 +36,16 @@ public class CustomerService {
         currentUser = null;
     }
 
-    public int editProfile(IUser oldCustomer , IUser newCustomer){
+    public int editProfile(IUser oldCustomer , IUser newCustomer)  {
 
-        return customerAccess.editProfile(oldCustomer.getEmailAddress(),newCustomer.getFirstName(),
-                newCustomer.getLastName(),newCustomer.getPassword(),newCustomer.getEmailAddress(),
-                newCustomer.getPhoneNumber(),newCustomer.getShippingAddress());
+        int res = -1;
+        try {
+            res = customerAccess.editProfile(oldCustomer.getEmailAddress(),newCustomer.getFirstName(),
+                    newCustomer.getLastName(),newCustomer.getPassword(),newCustomer.getEmailAddress(),
+                    newCustomer.getPhoneNumber(),newCustomer.getShippingAddress());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
     }
 }

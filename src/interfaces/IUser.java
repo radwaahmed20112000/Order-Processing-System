@@ -5,6 +5,9 @@ import models.CartManager;
 import services.BookService;
 import services.CustomerService;
 
+import java.sql.SQLException;
+import java.util.List;
+
 public class IUser {
 
     String firstName;
@@ -66,10 +69,18 @@ public class IUser {
     }
 
     public int editProfile(IUser updatedUser){
-        return customerService.editProfile(this,updatedUser);
+
+            int res =  customerService.editProfile(this,updatedUser);
+            return res;
+
     }
-    public IBook searchBook(String searchWords){
-        return bookService.findBook(searchWords);
+    public List<IBook> searchBook(String searchWords){
+        List<IBook> res =  bookService.findBook(searchWords);
+        for(int i = 0 ;i<res.size();i++){
+            System.out.println(res.get(i).toString());
+        }
+        return res;
+       // return  bookService.findBook(searchWords);
     }
 
 

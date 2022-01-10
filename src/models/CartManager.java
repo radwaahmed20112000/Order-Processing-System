@@ -4,6 +4,8 @@ import interfaces.IBook;
 import interfaces.ICart;
 import services.CartService;
 
+import java.util.List;
+
 
 public class CartManager implements ICart {
     String userEmail;
@@ -15,16 +17,16 @@ public class CartManager implements ICart {
     }
 
 
-    public void addToCart(int bookId , int count ){
-       cartService.addToCart(bookId,count,this.userEmail);
+    public boolean addToCart(int bookId , int count ){
+       return cartService.addToCart(bookId,count,this.userEmail);
     }
-    public void editQuantity(int bookId , int newCount){
-       cartService.editQuantity(bookId,newCount,this.userEmail);
+    public void editCartBookCount(int bookId , int newCount){
+       cartService.editCartBookCount(bookId,newCount,this.userEmail);
     }
     public void removeFromCart(int bookId){
         cartService.removeFromCart(bookId,this.userEmail);
     }
-    public Object[] viewCart(){
+    public List<String> viewCart(){
         return cartService.viewCart(this.userEmail);
     }
     public float getCartPrice(){

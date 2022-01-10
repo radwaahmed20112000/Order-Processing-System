@@ -1,8 +1,15 @@
 package services;
 
+import builders.BookBuilder;
 import databaseAccessLayer.BookAccess;
 import interfaces.IBook;
 import interfaces.IBookAuthor;
+import models.Book;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class BookService {
@@ -30,23 +37,53 @@ public class BookService {
 //    }
     public int editBookCount (int bookId , int newCount){
         //sql update query
-        return -1;
+        int res = -1;
+        try {
+            res = bookAccess.editBookQuantity(bookId,newQuantity);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
     }
 
-    public IBook findBook (String searchWords){
-        bookAccess.findBook(searchWords);
+    public List<IBook> findBook (String searchWords){
         // map between what db returns and the object book
-        return null;
+        List<IBook> result  = new ArrayList<>();
+        try {
+           ResultSet rs = bookAccess.findBook(searchWords);
+            while(rs.next()){
+                IBook book = bookMapper(rs.getInt(1),rs.getString(2),rs.getString(3),
+                        rs.getString(4),rs.getFloat(5),
+                        rs.getString(6),rs.getInt(7),rs.getInt(8));
+                result.add(book);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     public IBook findBookById (int bookId){
-        bookAccess.findBookById(bookId);
+        IBook book = null  ;
+        try {
+           ResultSet rs = bookAccess.findBookById(bookId);
+           while(rs.next()){
+            book = bookMapper(rs.getInt(1),rs.getString(2),rs.getString(3),
+                    rs.getString(4),rs.getFloat(5),
+                    rs.getString(6),rs.getInt(7),rs.getInt(8));
+            return book;
+           }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         // map between what db returns and the object book
-        return null;
+       return null;
     }
     public boolean isEnoughCount(int bookId ,int count){
         //select the book by the id
+         IBook book = findBookById(bookId);
         //check if current quantity of the book is > count
-        return false;
+        return (book.getCurrentQuantity()>= count);
     }
 }

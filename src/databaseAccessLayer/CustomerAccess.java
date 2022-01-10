@@ -1,9 +1,12 @@
 package databaseAccessLayer;
 
+import interfaces.IPublisher;
 import interfaces.IUser;
+import models.Publisher;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 
@@ -81,9 +84,14 @@ public class CustomerAccess extends Access {
     }
 
     public int editProfile(String oldUserEmail , String newUserFirstName , String newUserLastName , String newUserPassword
-    ,String newUserEmail , String newUserPhoneNum , String newUserShippingAddress){
+    ,String newUserEmail , String newUserPhoneNum , String newUserShippingAddress) throws SQLException {
         //sql query update;
-        return -1;
+        Statement stmt = connection.createStatement();
+        int res = stmt.executeUpdate("UPDATE  CUSTOMER SET first_name ='"+newUserFirstName +"' , last_name = '"
+                +newUserLastName +"' , password = '"+newUserPassword+"' , email_address = '"+newUserEmail+"' , phone_number = '"
+                +newUserPhoneNum +"' , shipping_address = '" + newUserShippingAddress + "' WHERE email_address = '" + oldUserEmail+"'");
+        return res;
+
     }
 
 }

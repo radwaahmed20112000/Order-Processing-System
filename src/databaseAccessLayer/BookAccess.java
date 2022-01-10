@@ -28,6 +28,7 @@ public class BookAccess extends Access {
         }
         return false;
     }
+    public ResultSet findBook(String searchWords) throws SQLException {
 
     public boolean addPublisher(String publisherName, String publisherAddress, String publisherTelephoneNum){
         try {
@@ -100,12 +101,24 @@ public class BookAccess extends Access {
     public Object[] findBook(String searchWords){
         // select query
         //return the o/p of the sql some thing like object array
-        return null;
+        Statement stmt = connection.createStatement();
+        String query = "Select * from BOOK where isbn = '" + searchWords + "' OR title = '"
+                + searchWords + "' OR publisher = '"+ searchWords + "' OR publication_year = '"+ searchWords + "' OR selling_price = '"
+                + searchWords + "' OR category = '"+ searchWords + "' OR min_quantity_threshold = '"+ searchWords + "' OR current_quantity ='"+ searchWords + "'";
+        ResultSet rs = stmt.executeQuery(query);
+        return rs;
     }
-
-    public Object findBookById(int bookId){
+    public ResultSet findBookById(int bookId) throws SQLException {
         //select query
-        return null;
+        Statement stmt = connection.createStatement();
+        String query = "Select * from BOOK where isbn = " + bookId  ;
+        ResultSet rs = stmt.executeQuery(query);
+        return rs;
     }
+   public int editBookQuantity(int bookId , int newQuantity) throws SQLException {
+       Statement stmt = connection.createStatement();
+       int res = stmt.executeUpdate("UPDATE  BOOK SET current_quantity = "+newQuantity +" WHERE isbn = " + bookId);
+       return res;
+   }
 
 }
