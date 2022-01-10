@@ -29,11 +29,13 @@ public class CartManager implements ICart {
         cartService.removeFromCart(bookId,this.userEmail);
     }
 
-    public List<String> viewCart(){
-        return cartService.viewCart(this.userEmail);
+    public List<String> viewCartDetails(){
+        return cartService.viewCartDetails(this.userEmail);
     }
     public float getCartPrice(){
        return cartService.getCartPrice(this.userEmail);
     }
+
+    public void buyCart(){ cartService.buyCart(userEmail);}
 
 }

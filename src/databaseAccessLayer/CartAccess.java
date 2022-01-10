@@ -25,15 +25,14 @@ public class CartAccess extends Access {
         stmt.executeUpdate("delete from CART  where user_email = '" + email +"' AND book_id = "+ bookId );
     }
 
-    public ResultSet viewCart(String email){
+    public ResultSet viewCart(String email) throws SQLException {
        //sql query select * from table cart
-        return null;
+        Statement stmt = connection.createStatement();
+        String query = "Select * from cart where user_email = '" + email +"'"  ;
+        ResultSet rs = stmt.executeQuery(query);
+        return rs;
     }
 
-    public float getCartPrice(String email){
-    //nested sql query to get the price
-        return -1;
-    }
 
     public ResultSet getBookCountCart( int bookId ,String email ) throws SQLException {
         //select query
