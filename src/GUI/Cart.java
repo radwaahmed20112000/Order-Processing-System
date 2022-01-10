@@ -2,6 +2,7 @@ package GUI;
 
 import interfaces.ICart;
 import models.CartManager;
+import services.CustomerService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,7 +47,13 @@ public class Cart extends JFrame implements ActionListener {
         back.setBackground(new Color(153, 102, 128));
         back.setSize(110, 35);
         back.setLocation(15, 15);
-        back.addActionListener(this);
+        back.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+               UserProfile user = new UserProfile(CustomerService.currentUser);
+
+            }
+        });
         container.add(back);
 
         itemsContainer = new JPanel();

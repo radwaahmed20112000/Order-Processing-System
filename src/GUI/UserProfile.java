@@ -93,7 +93,8 @@ public class UserProfile extends JFrame {
         mybutton btnLogOut = new mybutton("Log Out");
         btnLogOut.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                UserProfile.this.dispose();
+                user.logOut();
+                dispose();
             }
         });
         btnLogOut.setBounds(650, 11, 80, 23);

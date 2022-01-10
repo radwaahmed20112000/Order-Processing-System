@@ -71,7 +71,13 @@ public class Home extends JFrame {
             //---- Cart ----
             Cart.setText("Cart");
             Cart.setBorder(new EmptyBorder(5, 5, 5, 5));
-//            Cart.addActionListener(this::composeActionPerformed);
+            Cart.addActionListener(new ActionListener() {
+              public void actionPerformed(ActionEvent e) {
+                  dispose();
+                  Cart c = new Cart(CustomerService.currentUser.getCart());
+
+              }
+          });
 
             //======== panel3 ========
             {

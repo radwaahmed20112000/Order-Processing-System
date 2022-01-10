@@ -95,14 +95,17 @@ public class IUser {
     }
 
     public List<IBook> searchBook(String searchWords){
-        List<IBook> res =  bookService.findBook(searchWords);
-        for (IBook re : res) {
-            System.out.println(re.toString());
-        }
-        return res;
-       // return  bookService.findBook(searchWords);
+//        List<IBook> res =  bookService.findBook(searchWords);
+//        for (IBook re : res) {
+//            System.out.println(re.toString());
+//        }
+//        return res;
+        return  bookService.findBook(searchWords);
     }
 
+    public void logOut(){
+         customerService.logOut(this.emailAddress);
+    }
 
 
 }

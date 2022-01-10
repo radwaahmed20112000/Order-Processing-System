@@ -1,5 +1,7 @@
 package GUI;
 
+import services.CustomerService;
+
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.*;
@@ -145,6 +147,7 @@ class ButtonRenderer extends JButton implements TableCellRenderer {
                 //
                 JOptionPane.showMessageDialog(button, label + ": Ouch!");
                 // System.out.println(label + ": Ouch!");
+              //  CustomerService.currentUser.getCart().addToCart(,1);
             }
             isPushed = false;
             return label;

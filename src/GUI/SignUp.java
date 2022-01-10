@@ -200,7 +200,7 @@ public class SignUp extends JFrame implements ActionListener {
             if(obj.signUp(firstName,lastName,password,mail,phoneNumber,shippingAddress,type,userName)) {
                 result.setText("Register Successfully..");
                 dispose();
-                IUser user = new IUser (firstName,lastName ,password,mail,phoneNumber,shippingAddress);
+                IUser user = new IUser (firstName,lastName ,password,mail,phoneNumber,shippingAddress,userName);
                 UserProfile userProfile = new UserProfile(user);
             } else {
                 result.setText("Register failed..");
