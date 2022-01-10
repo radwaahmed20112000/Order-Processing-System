@@ -19,7 +19,7 @@ USE `mydb` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`PUBLISHER` (
   `name` VARCHAR(45) NOT NULL,
-  `address` VARCHAR(100) NULL,
+  `address` VARCHAR(200) NULL,
   `phone_number` VARCHAR(15) NULL,
   PRIMARY KEY (`name`))
 ENGINE = InnoDB;
@@ -38,7 +38,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`BOOK` (
   `min_quantity_threshold` INT NULL,
   `current_quantity` INT NULL,
   PRIMARY KEY (`isbn`),
-  INDEX `fk_book_idx` (`publisher` ASC) VISIBLE,
   CONSTRAINT `fk_book`
     FOREIGN KEY (`publisher`)
     REFERENCES `mydb`.`PUBLISHER` (`name`)
@@ -68,7 +67,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mydb`.`SUPPLIER_ORDER` (
   `book_id` INT NOT NULL,
   `required_quantity` INT NOT NULL,
-  `order_date` DATE NULL,
+  `order_date` TIMESTAMP NULL,
   PRIMARY KEY (`book_id`),
   CONSTRAINT `fk_supplier_order`
     FOREIGN KEY (`book_id`)
@@ -79,15 +78,15 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`CUSTOMER`
+-- Table `mydb`.`USER`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`CUSTOMER` (
+CREATE TABLE IF NOT EXISTS `mydb`.`USER` (
   `email_address` VARCHAR(45) NOT NULL,
   `first_name` VARCHAR(45) NULL,
   `last_name` VARCHAR(45) NULL,
-  `password` VARCHAR(45) NULL,
+  `password` VARCHAR(45) NOT NULL,
   `phone_number` VARCHAR(15) NULL,
-  `shipping_address` VARCHAR(100) NULL,
+  `shipping_address` VARCHAR(200) NULL,
   PRIMARY KEY (`email_address`))
 ENGINE = InnoDB;
 
@@ -98,9 +97,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mydb`.`CART` (
   `user_email` VARCHAR(45) NOT NULL,
   `book_id` INT NOT NULL,
-  `count` INT NULL,
+  `count` INT NOT NULL,
   PRIMARY KEY (`user_email`, `book_id`),
-  INDEX `fk_cart_book_idx` (`book_id` ASC) VISIBLE,
   CONSTRAINT `fk_cart_book`
     FOREIGN KEY (`book_id`)
     REFERENCES `mydb`.`BOOK` (`isbn`)
@@ -108,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`CART` (
     ON UPDATE CASCADE,
   CONSTRAINT `fk_cart_email`
     FOREIGN KEY (`user_email`)
-    REFERENCES `mydb`.`CUSTOMER` (`email_address`)
+    REFERENCES `mydb`.`USER` (`email_address`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -120,12 +118,11 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mydb`.`CLIENT_ORDER` (
   `order_id` INT NOT NULL AUTO_INCREMENT,
   `user_email` VARCHAR(45) NULL,
-  `order_date` VARCHAR(45) NULL,
+  `order_date` TIMESTAMP NULL,
   PRIMARY KEY (`order_id`),
-  INDEX `fk_client_order_idx` (`user_email` ASC) VISIBLE,
   CONSTRAINT `fk_client_order`
     FOREIGN KEY (`user_email`)
-    REFERENCES `mydb`.`CUSTOMER` (`email_address`)
+    REFERENCES `mydb`.`USER` (`email_address`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -137,9 +134,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mydb`.`CLIENT_ORDER_DETAILS` (
   `order_id` INT NOT NULL,
   `book_id` INT NOT NULL,
-  `order_count` VARCHAR(45) NULL,
+  `order_count` INT NOT NULL,
   PRIMARY KEY (`order_id`, `book_id`),
-  INDEX `fk_order_details_book_idx` (`book_id` ASC) VISIBLE,
   CONSTRAINT `fk_order_details_order`
     FOREIGN KEY (`order_id`)
     REFERENCES `mydb`.`CLIENT_ORDER` (`order_id`)
@@ -152,7 +148,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`CLIENT_ORDER_DETAILS` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `mydb`.`MANAGER`
 -- -----------------------------------------------------
@@ -161,7 +156,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`MANAGER` (
   PRIMARY KEY (`email_address`),
   CONSTRAINT `fk_manager`
     FOREIGN KEY (`email_address`)
-    REFERENCES `mydb`.`CUSTOMER` (`email_address`)
+    REFERENCES `mydb`.`USER` (`email_address`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -170,3 +165,4 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
