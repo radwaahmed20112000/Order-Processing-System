@@ -4,27 +4,25 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class OrdersTable extends JFrame {
+public class UsersTable extends JFrame {
     //final Color blue = Color.decode(" ")
-    Object[] colNames = {"", "Book", "Count", " Date"};
+    Object[] colNames = {"", "Email", "First Name", "Last Name"};
     Object[][] data = {};
     DefaultTableModel dtm;
     public static int numberOfMails = 0;
     int page;
     JTable table;
-    public OrdersTable(int page) {
+    public UsersTable(int page) {
         setSize(700, 700);
-        setTitle("Pending orders");
+        setTitle("Users");
         setLocationRelativeTo(null);
         setVisible(true);
         dtm = new DefaultTableModel(data,colNames);
         table = new JTable(dtm);
         TableColumn tc = table.getColumnModel().getColumn(0);
         tc.setCellEditor(
-                new OrdersButtonEditor(new JCheckBox()));
+                new UsersButtonEditor(new JCheckBox()));
         tc.setCellRenderer(new ButtonRenderer());
 
         // tc.setHeaderRenderer(new CheckBoxHeader(new MyItemListener()));
@@ -39,7 +37,7 @@ public class OrdersTable extends JFrame {
         for (int i = 0; i < 8; i++) {
 //                if(mail==null)
 //                    break;
-            dtm.addRow(new Object[]{"Accept", "Book" + i, "Count", " Date"});
+            dtm.addRow(new Object[]{"Promote", "Email" + i, "First Name", "Last Name"});
             numberOfMails++;
         }
 //        }
@@ -56,31 +54,23 @@ public class OrdersTable extends JFrame {
         return numberOfMails;
     }
 
-    public int getPage() {
-        return page;
-    }
-
     public static void main(String[] args) {
         UsersTable o = new UsersTable(1);
     }
 }
 
-class OrdersButtonEditor extends DefaultCellEditor {
+class UsersButtonEditor extends DefaultCellEditor {
     protected JButton button;
 
     private final String label = "Accept";
 
     private boolean isPushed;
 
-    public OrdersButtonEditor(JCheckBox checkBox) {
+    public UsersButtonEditor(JCheckBox checkBox) {
         super(checkBox);
         button = new JButton();
         button.setOpaque(true);
-        button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                fireEditingStopped();
-            }
-        });
+        button.addActionListener(e -> fireEditingStopped());
     }
 
     public Component getTableCellEditorComponent(JTable table, Object value,
