@@ -1,5 +1,7 @@
 package GUI;
 
+import services.CustomerService;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,11 +33,12 @@ public class SignUp extends JFrame implements ActionListener {
     private JTextArea addressField;
     private JButton register;
     private JButton reset;
+    private JLabel result;
 
     public SignUp() {
         /* Create Main Frame */
         setTitle("Welcome to our Book Store");
-        setBounds(300, 100, 700, 550);
+        setBounds(300, 100, 700, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
 
@@ -171,12 +174,36 @@ public class SignUp extends JFrame implements ActionListener {
         reset.addActionListener(this);
         container.add(reset);
 
+        result = new JLabel();
+        result.setFont(new Font("Arial", Font.PLAIN, 14));
+        result.setSize(120, 28);
+        result.setLocation(170, 500);
+        container.add(result);
+
         setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        CustomerService obj = new CustomerService();
+        if (e.getSource() == register) {
+            String userName = userNameField.getText();
+            String firstName = firstNameField.getText();
+            String lastName = lastNameField.getText();
+            String mail = mailField.getText();
+            char[] pass = passwordField.getPassword();
+            String password = pass.toString();
+            boolean type = customer.isSelected()? true : false;
+            if(obj.signUp(userName,mail,password,type)) {
+                result.setText("Register Successfully..");
+            } else {
+                result.setText("Register failed..");
+            }
+        } else if (e.getSource() == reset) {
+            String def = "";
+            mailField.setText(def);
+            passwordField.setText(def);
+        }
     }
 
     public static void main(String[] args) {
