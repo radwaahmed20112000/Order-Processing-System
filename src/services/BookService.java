@@ -13,7 +13,10 @@ import java.util.List;
 
 
 public class BookService {
-    BookAccess  bookAccess = new BookAccess();
+    BookAccess  bookAccess ;
+    public BookService(){
+        bookAccess = new BookAccess();
+    }
     public IBook bookMapper(int newBookId, String newTitle, String newPublisherName, String newPublicationYear,
                             float newSellingPrice, String newCategory, int newMinQuantity, int newCurrentQuantity){
 

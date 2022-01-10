@@ -13,7 +13,6 @@ public class BookAccess extends Access{
     Connection connection ;
     public BookAccess(){
         this.connection = getConnection();
-        System.out.println(connection == null);
     }
 
     public int editBook (int oldBookId , int bookId, String title, String publisherName,String publisherAddress,

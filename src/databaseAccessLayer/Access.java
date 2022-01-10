@@ -13,7 +13,6 @@ public class Access {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb?characterEncoding=latin1&useConfigs=maxPerformance",
                     "root", "123456");
-            System.out.println("Access printing"+connection == null);
             return connection;
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e);
