@@ -24,13 +24,9 @@ public class Home extends JFrame {
 //
 //    }
 //
-//    private void SentActionPerformed(ActionEvent e) {
-//        current = new Folder("sent",GUISignIn.Email);
-//        myApp.setViewingOptions(current,null,new Sort("Date ( Lastest )"));
-//        EmailsList.myTable.buildGUI(1);
-//
-//
-//    }
+    private void SentActionPerformed(ActionEvent e) {
+//        new UsersTable(1);
+    }
 //
 //    private void DraftsActionPerformed(ActionEvent e) {
 //        current = new Folder("drafts",GUISignIn.Email);
@@ -104,7 +100,7 @@ public class Home extends JFrame {
                 ManageUsers.setContentAreaFilled(false);
                 ManageUsers.setBorder(new LineBorder(Color.white, 1, true));
                 ManageUsers.setForeground(Color.white);
-//                ManageUsers.addActionListener(this::SentActionPerformed);
+                ManageUsers.addActionListener(this::SentActionPerformed);
 
                 //---- ManageOrders ----
                 ManageOrders.setText("Manage orders");
