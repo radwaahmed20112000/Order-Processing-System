@@ -98,9 +98,9 @@ public class BookAccess extends Access {
         return false;
     }
 
-    public ResultSet findBook(String searchWords){
+    public ResultSet findBook(String searchWords) {
         // select query
-        //return the o/p of the sql some thing like object array
+        //return the o/p of the sql something like object array
         try {
             String query = "Select * from BOOK where isbn = '" + searchWords
                     + "' OR title = '" + searchWords
@@ -128,7 +128,7 @@ public class BookAccess extends Access {
         return null;
     }
 
-    public int editBookQuantity(int bookId , int newQuantity) {
+    public int editBookQuantity(int bookId, int newQuantity) {
         try {
             return stmt.executeUpdate("UPDATE  BOOK" +
                     " SET current_quantity = " + newQuantity +

@@ -4,8 +4,6 @@ package interfaces;
 import models.CartManager;
 import services.BookService;
 import services.CustomerService;
-
-import java.sql.SQLException;
 import java.util.List;
 
 public class IUser {
@@ -69,9 +67,7 @@ public class IUser {
     }
 
     public int editProfile(IUser updatedUser){
-
-            int res =  customerService.editProfile(this,updatedUser);
-            return res;
+        return customerService.editProfile(this,updatedUser);
 
     }
     public List<IBook> searchBook(String searchWords){

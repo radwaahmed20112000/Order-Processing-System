@@ -19,15 +19,13 @@ public class CartService {
    public IBook bookIdMapper(int bookId){
        BookBuilder bookBuilder = new BookBuilder();
        bookBuilder.setBookId(bookId);
-       IBook book = bookBuilder.generateBook();
-       return book;
+       return bookBuilder.generateBook();
    }
 
     public boolean addToCart(int bookId , int count ,String email){
        IBook book = bookIdMapper(bookId);
        //check if there is enough currentQuantity of this book
-        boolean valid = book.isEnoughCount(count);
-        if (valid == true){
+        if (book.isEnoughCount(count)){
             // if there is then update it -- from the current Quantity done in editQuantity function
             IBook savedBook = bookService.findBookById(bookId);
             book.editBookCount(savedBook.getCurrentQuantity() - count);

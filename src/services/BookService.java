@@ -79,23 +79,23 @@ public class BookService {
     public IBook findBookById (int bookId){
         IBook book ;
         try {
-           ResultSet rs = bookAccess.findBookById(bookId);
-           while(rs.next()){
-               book = bookMapper(rs.getInt(1),rs.getString(2),rs.getString(3),
+            ResultSet rs = bookAccess.findBookById(bookId);
+            if (rs.next()){
+                book = bookMapper(rs.getInt(1),rs.getString(2),rs.getString(3),
                     rs.getString(4),rs.getFloat(5),
                     rs.getString(6),rs.getInt(7),rs.getInt(8));
-            return book;
-           }
+                return book;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         // map between what db returns and the object book
-       return null;
+        return null;
     }
     public boolean isEnoughCount(int bookId ,int count){
         //select the book by the id
          IBook book = findBookById(bookId);
         //check if current quantity of the book is > count
-        return (book.getCurrentQuantity()>= count);
+        return (book.getCurrentQuantity() >= count);
     }
 }

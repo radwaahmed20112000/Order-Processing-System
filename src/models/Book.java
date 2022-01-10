@@ -8,16 +8,16 @@ import services.BookService;
 import java.util.List;
 
 public class Book implements IBook {
-    int bookId;
-    String title;
-    IPublisher publisher;
-    String publicationYear;
-    float sellingPrice;
-    String category;
-    int minQuantity;
-    int currentQuantity;
-    List<IBookAuthor> bookAuthors;
-    BookService bookService ;
+    private final int bookId;
+    private final String title;
+    private final IPublisher publisher;
+    private final String publicationYear;
+    private final float sellingPrice;
+    private final String category;
+    private final int minQuantity;
+    private final int currentQuantity;
+    private final List<IBookAuthor> bookAuthors;
+    private final BookService bookService ;
 
     public Book(int bookId, String title, IPublisher publisher,
                 String publicationYear, float sellingPrice, String category,
