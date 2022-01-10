@@ -46,7 +46,7 @@ public class BooksList extends JPanel {
         filter = new JButton();
         textSearch = new JTextField();
         buttonSearch = new JButton();
-        myBooksTable = new UsersTable(1);
+        myBooksTable = new BooksTable(1);
         scrollMails = new JScrollPane(myBooksTable);
         if(myBooksTable.getNumberOfMails()==0){
             JOptionPane.showMessageDialog(invisible, "No mail in this Folder");
@@ -136,6 +136,6 @@ public class BooksList extends JPanel {
     private JButton buttonSearch;
 //    Search search;
     JFrame invisible = new JFrame();
-    static UsersTable myBooksTable;
+    static BooksTable myBooksTable;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
