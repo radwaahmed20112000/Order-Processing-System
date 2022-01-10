@@ -190,11 +190,13 @@ public class SignUp extends JFrame implements ActionListener {
             String userName = userNameField.getText();
             String firstName = firstNameField.getText();
             String lastName = lastNameField.getText();
+            String phoneNumber = phoneNumberField.getText();
+            String shippingAddress = address.getText();
             String mail = mailField.getText();
             char[] pass = passwordField.getPassword();
             String password = pass.toString();
             boolean type = customer.isSelected()? true : false;
-            if(obj.signUp(userName,mail,password,type)) {
+            if(obj.signUp(firstName,lastName,password,mail,phoneNumber,shippingAddress,type)) {
                 result.setText("Register Successfully..");
             } else {
                 result.setText("Register failed..");
