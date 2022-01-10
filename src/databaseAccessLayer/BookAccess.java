@@ -106,10 +106,7 @@ public class BookAccess extends Access {
                     + "' OR title = '" + searchWords
                     + "' OR publisher = '"+ searchWords
                     + "' OR publication_year = '" + searchWords
-                    + "' OR selling_price = '" + searchWords
-                    + "' OR category = '" + searchWords
-                    + "' OR min_quantity_threshold = '" + searchWords
-                    + "' OR current_quantity ='" + searchWords + "'";
+                    + "' OR category = '" + searchWords;
             return stmt.executeQuery(query);
         }catch(Exception e) {
             System.out.println(e.getMessage());
