@@ -136,6 +136,8 @@ public class SignIn extends JFrame implements ActionListener {
             String password = pass.toString();
             boolean type = customer.isSelected()? true : false;
             if(obj.signIn(mail,password,type)) {
+                setVisible(false);
+                Home homeObj = new Home();
                 result.setText("Sign In Successfully..");
             } else {
                 result.setText("Sign In failed..");
@@ -145,8 +147,8 @@ public class SignIn extends JFrame implements ActionListener {
             mailField.setText(def);
             passwordField.setText(def);
         } else if(e.getSource() == signUp) {
-            // go to sign up screen
-
+            setVisible(false);
+            SignUp signObj = new SignUp();
         }
     }
 

@@ -208,7 +208,4 @@ public class SignUp extends JFrame implements ActionListener {
         }
     }
 
-    public static void main(String[] args) {
-        SignUp obj = new SignUp();
-    }
 }
