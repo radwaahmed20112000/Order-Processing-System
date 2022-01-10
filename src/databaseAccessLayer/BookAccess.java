@@ -113,11 +113,14 @@ public class BookAccess extends Access {
         }
         return null;
     }
-    public ResultSet showBook() {
+    public ResultSet getBooks() {
         // select query
         //return the o/p of the sql something like object array
         try {
-            String query = "Select * from BOOK";
+            String query = "SELECT isbn , title, publisher,publication_year , selling_price , category ,min_quantity_threshold,current_quantity," +
+                    "JSON_ARRAYAGG(JSON_OBJECT('name', BOOK_AUTHOR.name)) as authors " +
+                    "                            FROM " +
+                    "                                (BOOK join BOOK_AUTHOR on BOOK.isbn = BOOK_AUTHOR.book_id ) GROUP BY BOOK_AUTHOR.book_id;";
             return stmt.executeQuery(query);
         }catch(Exception e) {
             System.out.println(e.getMessage());
