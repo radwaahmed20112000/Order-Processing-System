@@ -16,7 +16,7 @@ public class mybutton extends JButton {
         super(s);
         this.setBackground(new Color(153, 102, 128));
         this.setForeground(new Color(68, 50, 102));
-        this.setMinimumSize(new Dimension(200, 50));
+        this.setMinimumSize(new Dimension(100, 50));
         this.setPreferredSize(new Dimension(200, 50));
     }
 }
