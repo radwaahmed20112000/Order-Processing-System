@@ -1,8 +1,9 @@
 package services;
 
-import builders.UserBuilder;
 import databaseAccessLayer.CustomerAccess;
 import interfaces.IUser;
+
+import java.sql.SQLException;
 
 public class CustomerService {
     CustomerAccess customerAccess = new CustomerAccess();
@@ -15,14 +16,7 @@ public class CustomerService {
                           String phoneNumber,
                           String shippingAddress,
                           boolean userType) {
-        UserBuilder userBuilder = new UserBuilder();
-        userBuilder.setFirstName(firstName);
-        userBuilder.setLastName(lastName);
-        userBuilder.setPassword(password);
-        userBuilder.setEmailAddress(emailAddress);
-        userBuilder.setPhoneNumber(phoneNumber);
-        userBuilder.setShippingAddress(shippingAddress);
-        IUser created = userBuilder.generateUser();
+        IUser created = new IUser(firstName,lastName,password,emailAddress,phoneNumber,shippingAddress);
         // check if user can be added successfully
         if(!customerAccess.addUser(created, userType))
             return false;
@@ -42,10 +36,16 @@ public class CustomerService {
         currentUser = null;
     }
 
-    public int editProfile(IUser oldCustomer , IUser newCustomer){
+    public int editProfile(IUser oldCustomer , IUser newCustomer)  {
 
-        return customerAccess.editProfile(oldCustomer.getEmailAddress(),newCustomer.getFirstName(),
-                newCustomer.getLastName(),newCustomer.getPassword(),newCustomer.getEmailAddress(),
-                newCustomer.getPhoneNumber(),newCustomer.getShippingAddress());
+        int res = -1;
+        try {
+            res = customerAccess.editProfile(oldCustomer.getEmailAddress(),newCustomer.getFirstName(),
+                    newCustomer.getLastName(),newCustomer.getPassword(),newCustomer.getEmailAddress(),
+                    newCustomer.getPhoneNumber(),newCustomer.getShippingAddress());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
     }
 }

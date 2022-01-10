@@ -1,13 +1,12 @@
 package controllers;
 
-import builders.UserBuilder;
 import interfaces.IUser;
+import java.util.List;
 
 public class CartController {
+
     public IUser userEmailMapper(String email){
-        UserBuilder userBuilder = new UserBuilder();
-        userBuilder.setEmailAddress(email);
-        IUser user = userBuilder.generateUser();
+        IUser user = new IUser(email);
         return user;
     }
     //on add to cart clicked
@@ -16,14 +15,14 @@ public class CartController {
     }
     //on edit quantity button clicked
    public void editQuantity(int bookId , int newCount,String email){
-       userEmailMapper(email).getCart().editQuantity(bookId,newCount);
+       userEmailMapper(email).getCart().editCartBookCount(bookId,newCount);
    }
    //on remove from cart button clicked
     public void removeFromCart(int bookId ,String email){
         userEmailMapper(email).getCart().removeFromCart(bookId);
     }
     //on view cart clicked
-    public Object[] viewCart(String email){
+    public List<String> viewCart(String email){
         return userEmailMapper(email).getCart().viewCart();
     }
     //on get cart price clicked

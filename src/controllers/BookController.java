@@ -1,33 +1,23 @@
 package controllers;
 
 import builders.BookBuilder;
-import builders.PublisherBuilder;
 import interfaces.IBook;
 import interfaces.IBookAuthor;
-import interfaces.IPublisher;
 
 public class BookController {
     public IBook bookMapper(int newBookId, String newTitle, String newPublisherName,String newPublisherAddress,
                             String newPublisherTelephoneNum, String newPublicationYear, float newSellingPrice, String newCategory,
-                            int newMinQuantity, int newCurrentQuantity){
-
-
+                            int newMinQuantity, int newCurrentQuantity,String[]bookAuthorsNames){
         BookBuilder newBookBuilder = new BookBuilder();
-        PublisherBuilder newPublisherBuilder = new PublisherBuilder();
         newBookBuilder.setBookId(newBookId);
         newBookBuilder.setTitle(newTitle);
-
-        newPublisherBuilder.setName(newPublisherName);
-        newPublisherBuilder.setAddress(newPublisherAddress);
-        newPublisherBuilder.setTelephoneNumber(newPublisherTelephoneNum);
-        IPublisher newPublisher = newPublisherBuilder.generatePublisher();
-
-        newBookBuilder.setPublisher(newPublisher);
+//        newBookBuilder.setPublisher(newPublisherName,newPublisherAddress,newPublisherTelephoneNum);
         newBookBuilder.setPublicationYear(newPublicationYear);
         newBookBuilder.setSellingPrice(newSellingPrice);
         newBookBuilder.setCategory(newCategory);
         newBookBuilder.setMinQuantity(newMinQuantity);
         newBookBuilder.setCurrentQuantity(newCurrentQuantity);
+        newBookBuilder.setBookAuthors(bookAuthorsNames);
         IBook newBook = newBookBuilder.generateBook();
 
         return newBook;
@@ -39,15 +29,15 @@ public class BookController {
         return book;
     }
 
-//on edit book clicked
+    //on edit book clicked
     public int editBook (int oldBookId , int newBookId, String newTitle, String newPublisherName,String newPublisherAddress,
                          String newPublisherTelephoneNum, String newPublicationYear, float newSellingPrice, String newCategory,
-                         int newMinQuantity, int newCurrentQuantity) {
+                         int newMinQuantity, int newCurrentQuantity,String[]bookAuthorsNames) {
         //mapping data to objects
        IBook oldBook = bookIdMapper(oldBookId);
        IBook newBook = bookMapper(newBookId,  newTitle,  newPublisherName, newPublisherAddress,
                 newPublisherTelephoneNum,  newPublicationYear,  newSellingPrice,  newCategory,
-         newMinQuantity,  newCurrentQuantity);
+         newMinQuantity,  newCurrentQuantity,bookAuthorsNames);
 
         //call
         return oldBook.editBook(newBook);

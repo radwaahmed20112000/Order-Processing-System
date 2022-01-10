@@ -4,52 +4,84 @@ import builders.BookBuilder;
 import databaseAccessLayer.CartAccess;
 import interfaces.IBook;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
 
 public class CartService {
-   CartAccess cartAccess = new CartAccess();
-
+    CartAccess cartAccess;
+    BookService bookService;
+    public CartService(){
+    cartAccess = new CartAccess();
+    bookService = new BookService();
+    }
    public IBook bookIdMapper(int bookId){
        BookBuilder bookBuilder = new BookBuilder();
        bookBuilder.setBookId(bookId);
-       IBook book = bookBuilder.generateBook();
-       return book;
+       return bookBuilder.generateBook();
    }
 
-    public void addToCart(int bookId , int count ,String email){
+    public boolean addToCart(int bookId , int count ,String email){
        IBook book = bookIdMapper(bookId);
-        boolean valid = book.isEnoughCount(count);
-        if (valid == true){
-            book.editBookCount(count);
-            cartAccess.addToCart(bookId,count,email);
+       //check if there is enough currentQuantity of this book
+        if (book.isEnoughCount(count)){
+            // if there is then update it -- from the current Quantity done in editQuantity function
+            IBook savedBook = bookService.findBookById(bookId);
+            book.editBookCount(savedBook.getCurrentQuantity() - count);
+            try {
+                // add the book with the desired count in user cart
+                cartAccess.addToCart(bookId,count,email);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return true;
         }else{
             //show message there is no enough quantity
+            return false;
         }
     }
-    public void editQuantity(int bookId , int newCount ,String email){
-        IBook book = bookIdMapper(bookId);
-        boolean valid = book.isEnoughCount(newCount);
-        if (valid == true){
-            book.editBookCount(newCount);
-            cartAccess.addToCart(bookId,newCount,email);
-        }else{
-            //show message there is no enough quantity
-        }
+    public void editCartBookCount(int bookId , int newCount ,String email){
+        //first remove the book from the cart to release the copies hold
+        removeFromCart(bookId,email);
+        //now the table book is updated
+        //add the book to the cart again
+       addToCart(bookId,newCount,email);
     }
 
     public void removeFromCart(int bookId , String email){
         IBook book = bookIdMapper(bookId);
-         int count = cartAccess.getBookCountCart( bookId ,email);
-         book.editBookCount(count);
-         cartAccess.removeFromCart(bookId,email);
+        //get the count of copies of the book in the cart
+         int count = getBookCountCart( bookId ,email);
+         //get the currentQuantity of the book to add the released ones to it
+         IBook savedBook = bookService.findBookById(bookId);
+         // return the book copies on the shelf
+         book.editBookCount(savedBook.getCurrentQuantity() + count);
+
+        try {
+            //remove the item from the cart
+            cartAccess.removeFromCart(bookId,email);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-    public Object[] viewCart(String email){
+
+    public int getBookCountCart (int bookId , String email) {
+        int count = 0;
+        try {
+            ResultSet rs = cartAccess.getBookCountCart(bookId, email);
+            while(rs.next()){count = rs.getInt(1);}
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public List<String> viewCart(String email){
         cartAccess.viewCart(email);
         return null;
     }
     public float getCartPrice(String email){
-       return cartAccess.getCartPrice(email);
-    }
-    public int getBookCountCart (int bookId , String email) {
-       return cartAccess.getBookCountCart(bookId, email);
+        return cartAccess.getCartPrice(email);
     }
 }

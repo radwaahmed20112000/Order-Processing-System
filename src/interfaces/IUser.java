@@ -4,6 +4,7 @@ package interfaces;
 import models.CartManager;
 import services.BookService;
 import services.CustomerService;
+import java.util.List;
 
 public class IUser {
 
@@ -16,6 +17,14 @@ public class IUser {
     ICart cart;
     CustomerService customerService;
     BookService bookService;
+
+
+    public IUser (String email){
+        this.emailAddress = email;
+        this.cart = new CartManager(this.emailAddress);
+        this.customerService = new CustomerService();
+        this.bookService = new BookService();
+    }
     public IUser(String firstName, String lastName, String password, String emailAddress, String phoneNumber,
                  String shippingAddress) {
         this.firstName = firstName;
@@ -59,9 +68,15 @@ public class IUser {
 
     public int editProfile(IUser updatedUser){
         return customerService.editProfile(this,updatedUser);
+
     }
-    public IBook searchBook(String searchWords){
-        return bookService.findBook(searchWords);
+    public List<IBook> searchBook(String searchWords){
+        List<IBook> res =  bookService.findBook(searchWords);
+        for (IBook re : res) {
+            System.out.println(re.toString());
+        }
+        return res;
+       // return  bookService.findBook(searchWords);
     }
 
 

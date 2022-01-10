@@ -5,22 +5,23 @@ import interfaces.IBookAuthor;
 import interfaces.IPublisher;
 import services.BookService;
 
-public class Book implements IBook {
-    int bookId;
-    String title;
-    IPublisher publisher;
-    String publicationYear;
-    float sellingPrice;
-    String category;
-    int minQuantity;
-    int currentQuantity;
-    IBookAuthor[] bookAuthors;
+import java.util.List;
 
-    BookService bookService ;
+public class Book implements IBook {
+    private final int bookId;
+    private final String title;
+    private final IPublisher publisher;
+    private final String publicationYear;
+    private final float sellingPrice;
+    private final String category;
+    private final int minQuantity;
+    private final int currentQuantity;
+    private final List<IBookAuthor> bookAuthors;
+    private final BookService bookService ;
 
     public Book(int bookId, String title, IPublisher publisher,
                 String publicationYear, float sellingPrice, String category,
-                int minQuantity, int currentQuantity,IBookAuthor[] bookAuthors) {
+                int minQuantity, int currentQuantity, List<IBookAuthor> bookAuthors) {
         this.bookId = bookId;
         this.title = title;
         this.publisher = publisher;
@@ -32,9 +33,6 @@ public class Book implements IBook {
         this.bookAuthors = bookAuthors;
         this.bookService = new BookService();
     }
-
-
-
 
     public int getBookId() {
         return bookId;
@@ -68,22 +66,47 @@ public class Book implements IBook {
         return currentQuantity;
     }
 
-    public IBookAuthor[] getBookAuthors() {
+    public List<IBookAuthor> getBookAuthors() {
         return bookAuthors;
     }
 
 
     @Override
     public int editBook(IBook updatedBook) {
-        return bookService.editBook(this,updatedBook);
+        //TODO
+//        return bookService.editBook(this,updatedBook);
+        return 0;
     }
+
     public int editBookAuthors(IBookAuthor[] updatedBookAuthors){
-        return bookService.editBookAuthor(this, updatedBookAuthors);
+        //TODO
+//        return bookService.editBookAuthor(this, updatedBookAuthors);
+        return 0;
     }
-    public int editBookCount (int newCount){
-        return bookService.editBookCount(this.bookId,newCount);
+
+    @Override
+    public int editBookCount(int newCount) {
+        return bookService.editBookQuantity(this.bookId, newCount);
     }
+
+
     public boolean isEnoughCount(int count){
         return bookService.isEnoughCount(this.bookId,count);
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "bookId=" + bookId +
+                ", title='" + title + '\'' +
+                ", publisher=" + publisher +
+                ", publicationYear='" + publicationYear + '\'' +
+                ", sellingPrice=" + sellingPrice +
+                ", category='" + category + '\'' +
+                ", minQuantity=" + minQuantity +
+                ", currentQuantity=" + currentQuantity +
+                //TODO FARIDA
+//                ", bookAuthors=" + Arrays.toString(bookAuthors) +
+                '}';
     }
 }
