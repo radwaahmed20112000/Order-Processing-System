@@ -2,6 +2,8 @@ package controllers;
 
 import interfaces.IUser;
 
+import java.util.List;
+
 public class CartController {
     public IUser userEmailMapper(String email){
         IUser user = new IUser(email);
@@ -20,7 +22,7 @@ public class CartController {
         userEmailMapper(email).getCart().removeFromCart(bookId);
     }
     //on view cart clicked
-    public Object[] viewCart(String email){
+    public List<String> viewCart(String email){
         return userEmailMapper(email).getCart().viewCart();
     }
     //on get cart price clicked

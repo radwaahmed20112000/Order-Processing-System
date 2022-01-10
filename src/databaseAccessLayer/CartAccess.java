@@ -23,7 +23,7 @@ public class CartAccess extends Access {
     public void removeFromCart(int bookId , String email) throws SQLException {
         //sql query delete
         Statement stmt = connection.createStatement();
-        stmt.executeUpdate("delete from CART  where email = '" + email +"' AND bookId = "+ bookId );
+        stmt.executeUpdate("delete from CART  where user_email = '" + email +"' AND book_id = "+ bookId );
     }
 
     public ResultSet viewCart(String email){
@@ -37,7 +37,7 @@ public class CartAccess extends Access {
     public ResultSet getBookCountCart( int bookId ,String email ) throws SQLException {
         //select query
         Statement stmt = connection.createStatement();
-        String query = "Select count from cart where email = '" + email +"' AND bookId = "+ bookId  ;
+        String query = "Select count from cart where user_email = '" + email +"' AND book_id = "+ bookId  ;
         ResultSet rs = stmt.executeQuery(query);
         return rs;
     }

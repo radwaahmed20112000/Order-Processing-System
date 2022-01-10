@@ -56,9 +56,10 @@ public class CartService {
         //get the count of copies of the book in the cart
          int count = getBookCountCart( bookId ,email);
          //get the currentQuantity of the book to add the released ones to it
-         IBook savedBook =bookService.findBookById(bookId);
+         IBook savedBook = bookService.findBookById(bookId);
          // return the book copies on the shelf
-         book.editBookQuantity(book.getCurrentQuantity()+count);
+
+         book.editBookQuantity(savedBook.getCurrentQuantity()+count);
         try {
             //remove the item from the cart
             cartAccess.removeFromCart(bookId,email);
