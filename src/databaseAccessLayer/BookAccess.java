@@ -113,7 +113,17 @@ public class BookAccess extends Access {
         }
         return null;
     }
-
+    public ResultSet showBook() {
+        // select query
+        //return the o/p of the sql something like object array
+        try {
+            String query = "Select * from BOOK";
+            return stmt.executeQuery(query);
+        }catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
     public ResultSet findBookById(int bookId) {
         //select query
         try {

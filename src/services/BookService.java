@@ -101,8 +101,26 @@ public class BookService {
 
         return result;
     }
+    public List<IBook> getBooks () {
+        List<IBook> result  = new ArrayList<>();
+        try {
+            ResultSet rs = bookAccess.showBook();
+            while(rs.next()){
+                IBook book = bookMapper(rs.getInt(1),rs.getString(2),rs.getString(3),
+                        rs.getString(4),rs.getFloat(5),
+                        rs.getString(6),rs.getInt(7),rs.getInt(8),"",
+                        "", new String[]{});
+                ResultSet authorRs = bookAccess.findBookAuthors(rs.getInt(1));
 
-    public IBook findBookById (int bookId){
+                result.add(book);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+        public IBook findBookById (int bookId){
         IBook book ;
         try {
             ResultSet rs = bookAccess.findBookById(bookId);
