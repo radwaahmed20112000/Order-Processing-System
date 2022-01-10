@@ -46,8 +46,10 @@ public class BookBuilder {
      */
     public IBook generateBook() {
         IPublisher publisher = new Publisher(publisherName, publisherAddress, publisherTelephoneNum);
-        for (String author : bookAuthorNames)
-            bookAuthors.add(new BookAuthor(author));
+        if(bookAuthorNames != null) {
+            for (String author : bookAuthorNames)
+                bookAuthors.add(new BookAuthor(author));
+        }
         return new Book(this.bookId, this.title, publisher, this.publicationYear,
                 this.sellingPrice, this.category, this.minQuantity, this.currentQuantity, this.bookAuthors);
     }

@@ -1,5 +1,6 @@
 package interfaces;
 
-public interface IBookAuthor {
+public interface IBookAuthor extends Comparable<IBookAuthor> {
     String getName();
+
 }
