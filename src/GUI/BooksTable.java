@@ -1,9 +1,16 @@
 package GUI;
 
-import java.awt.*;
+import interfaces.IBook;
+import models.Book;
+import services.CustomerService;
+
 import javax.swing.*;
-import javax.swing.table.*;
-import java.awt.event.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class BooksTable extends JTable {
     //final Color blue = Color.decode(" ")
@@ -12,33 +19,26 @@ public class BooksTable extends JTable {
     Object[] colNames = {"", "Title", "Authors", " Publisher", "Year", "Price", "Category", "Quantity"};
     Object[][] data = {};
     DefaultTableModel dtm;
-    public static int numberOfMails = 0;
-    int page;
+    List<IBook> bookList = null;
 
-    public BooksTable(int page) {
-        this.page = page;
-        buildGUI(page);
+    public BooksTable(List<IBook> bookList) {
+        this.bookList = bookList;
+        buildGUI();
     }
 
-    public void buildGUI(int page) {
-        this.page = page;
+    public void buildGUI() {
+
         dtm = new DefaultTableModel(data, colNames);
 
-        // clearTable();
-//        if(mails!=null)
-//            Arrays.fill(mails,null);
-        setModel(dtm);
-//        App myApp = new App();
-//        mails = (Mail[]) myApp.listEmails(page);
-//        if(mails!=null) {
-        for (int i = 0; i < 8; i++) {
-//                if(mail==null)
-//                    break;
-            dtm.addRow(new Object[]{"+", "Title" + i, "Authors" + i, " Publisher", "Year", "Price", "Category", "Quantity"});
-            numberOfMails++;
+        if(bookList == null){
+            bookList = CustomerService.currentUser.getBooks();
+            setModel(dtm);
         }
-//        }
-
+            for (IBook Ibook:bookList
+            ) {
+                Book book = (Book)Ibook;
+                dtm.addRow(new Object[]{"+", book.getTitle(), Arrays.toString(book.getAuthorsString()), book.getPublisher().getName(), book.getPublicationYear(), book.getSellingPrice(), book.getCategory(), book.getCurrentQuantity()});
+            }
 
         setBackground(Color.decode("#222831"));
         setForeground(Color.decode("#eeeeee"));
@@ -80,13 +80,7 @@ public class BooksTable extends JTable {
 
     }
 
-    public int getNumberOfMails() {
-        return numberOfMails;
-    }
 
-    public int getPage() {
-        return page;
-    }
 }
 class ButtonRenderer extends JButton implements TableCellRenderer {
 
@@ -118,11 +112,7 @@ class ButtonRenderer extends JButton implements TableCellRenderer {
             super(checkBox);
             button = new JButton();
             button.setOpaque(true);
-            button.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    fireEditingStopped();
-                }
-            });
+            button.addActionListener(e -> fireEditingStopped());
         }
 
         public Component getTableCellEditorComponent(JTable table, Object value,
