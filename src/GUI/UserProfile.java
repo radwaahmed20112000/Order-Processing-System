@@ -132,9 +132,9 @@ public class UserProfile extends JFrame {
                 } else {
                     aa = true;
                 }
-
+//TODO username
                 if (aa) {
-                    IUser newData = new IUser(firstName, lastName, password, email, phoneNumber, shippingAddress);
+                    IUser newData = new IUser(firstName, lastName, password, email, phoneNumber, shippingAddress,firstName+lastName);
                     int res = user.editProfile(newData);
                     if (res == 1) {
                         JOptionPane.showMessageDialog((Component)null, "Changes Saved");

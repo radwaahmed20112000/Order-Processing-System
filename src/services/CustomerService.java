@@ -15,8 +15,8 @@ public class CustomerService {
                           String emailAddress,
                           String phoneNumber,
                           String shippingAddress,
-                          boolean userType) {
-        IUser created = new IUser(firstName,lastName,password,emailAddress,phoneNumber,shippingAddress);
+                          boolean userType,String userName) {
+        IUser created = new IUser(firstName,lastName,password,emailAddress,phoneNumber,shippingAddress,userName);
         // check if user can be added successfully
         if(!customerAccess.addUser(created, userType))
             return false;

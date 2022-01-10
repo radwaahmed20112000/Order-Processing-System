@@ -14,6 +14,12 @@ public class IUser {
     String emailAddress;
     String phoneNumber;
     String shippingAddress;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    String userName;
     ICart cart;
     CustomerService customerService;
     BookService bookService;
@@ -26,13 +32,14 @@ public class IUser {
         this.bookService = new BookService();
     }
     public IUser(String firstName, String lastName, String password, String emailAddress, String phoneNumber,
-                 String shippingAddress) {
+                 String shippingAddress,String userName) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.emailAddress = emailAddress;
         this.phoneNumber = phoneNumber;
         this.shippingAddress = shippingAddress;
+        this.userName = userName;
         this.cart = new CartManager(this.emailAddress);
         this.customerService = new CustomerService();
         this.bookService = new BookService();
