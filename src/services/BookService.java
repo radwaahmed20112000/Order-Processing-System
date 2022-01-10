@@ -10,24 +10,24 @@ public class BookService {
 
 
 
-    public int editBook(IBook oldBook , IBook newBook){
-        return bookAccess.editBook(oldBook.getBookId(),newBook.getBookId(), newBook.getTitle(),
-                newBook.getPublisher().getName(),newBook.getPublisher().getAddress(),
-                newBook.getPublisher().getTelephoneNumber(),newBook.getPublicationYear(),
-                newBook.getSellingPrice(),newBook.getCategory(),newBook.getMinQuantity(),newBook.getCurrentQuantity());
-
-    }
-    public int editBookAuthor(IBook oldBook , IBookAuthor[] updatedBookAuthors){
-        //loop for all the authors to detect which one updated
-        for(int i = 0 ; i< updatedBookAuthors.length;i++){
-           if(oldBook.getBookAuthors()[i].equals(updatedBookAuthors[i]) == false){
-               int res =bookAccess.editBookAuthor(oldBook.getBookId(),oldBook.getBookAuthors()[i].getName(),
-                       updatedBookAuthors[i].getName());
-               if (res == -1) ; return res;
-           }
-        }
-       return 1;
-    }
+//    public int editBook(IBook oldBook , IBook newBook){
+//        return bookAccess.editBook(oldBook.getBookId(),newBook.getBookId(), newBook.getTitle(),
+//                newBook.getPublisher().getName(),newBook.getPublisher().getAddress(),
+//                newBook.getPublisher().getTelephoneNumber(),newBook.getPublicationYear(),
+//                newBook.getSellingPrice(),newBook.getCategory(),newBook.getMinQuantity(),newBook.getCurrentQuantity());
+//
+//    }
+//    public int editBookAuthor(IBook oldBook , IBookAuthor[] updatedBookAuthors){
+//        //loop for all the authors to detect which one updated
+//        for(int i = 0 ; i< updatedBookAuthors.length;i++){
+//           if(oldBook.getBookAuthors()[i].equals(updatedBookAuthors[i]) == false){
+//               int res =bookAccess.editBookAuthor(oldBook.getBookId(),oldBook.getBookAuthors()[i].getName(),
+//                       updatedBookAuthors[i].getName());
+//               if (res == -1) ; return res;
+//           }
+//        }
+//       return 1;
+//    }
     public int editBookCount (int bookId , int newCount){
         //sql update query
         return -1;

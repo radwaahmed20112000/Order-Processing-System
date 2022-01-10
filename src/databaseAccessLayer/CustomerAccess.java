@@ -5,8 +5,7 @@ import interfaces.IUser;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 
 public class CustomerAccess extends Access {
     public static final boolean CUSTOMER = true;
@@ -47,7 +46,7 @@ public class CustomerAccess extends Access {
             }
             rs.next();
             String s = rs.getString(1);
-            return  s.equals("1")? true: false;
+            return s.equals("1");
         }catch(Exception e) {
             System.out.println(e);
         }
@@ -65,7 +64,8 @@ public class CustomerAccess extends Access {
                 if(logged != 1) {
                     String pass = rs.getString(3);
                     if(pass.equals(password)) {
-                        IUser user = new IUser(rs.getString(1), rs.getString(2), pass, rs.getString(4), rs.getString(5), rs.getString(6));
+                        IUser user = new IUser(rs.getString(1), rs.getString(2), pass,
+                                rs.getString(4), rs.getString(5), rs.getString(6));
                         // Loading user data ----------------
 
 

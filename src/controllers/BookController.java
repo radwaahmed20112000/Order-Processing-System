@@ -9,12 +9,10 @@ public class BookController {
     public IBook bookMapper(int newBookId, String newTitle, String newPublisherName,String newPublisherAddress,
                             String newPublisherTelephoneNum, String newPublicationYear, float newSellingPrice, String newCategory,
                             int newMinQuantity, int newCurrentQuantity,String[]bookAuthorsNames){
-
-
         BookBuilder newBookBuilder = new BookBuilder();
         newBookBuilder.setBookId(newBookId);
         newBookBuilder.setTitle(newTitle);
-        newBookBuilder.setPublisher(newPublisherName,newPublisherAddress,newPublisherTelephoneNum);
+//        newBookBuilder.setPublisher(newPublisherName,newPublisherAddress,newPublisherTelephoneNum);
         newBookBuilder.setPublicationYear(newPublicationYear);
         newBookBuilder.setSellingPrice(newSellingPrice);
         newBookBuilder.setCategory(newCategory);
