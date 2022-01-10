@@ -14,14 +14,14 @@ public class CustomerController {
         return user;
     }
     //on edit button clicked
-    public int editProfile(String oldUserEmail , String newUserFirstName , String newUserLastName , String newUserPassword
+    public void editProfile(String oldUserEmail , String newUserFirstName , String newUserLastName , String newUserPassword
             ,String newUserEmail , String newUserPhoneNum , String newUserShippingAddress){
 
         IUser oldUSer = userEmailMapper(oldUserEmail);
         IUser newUser = userMapper(newUserFirstName ,  newUserLastName ,  newUserPassword
                 , newUserEmail ,  newUserPhoneNum ,  newUserShippingAddress);
 
-        return oldUSer.editProfile(newUser);
+         oldUSer.editProfile(newUser);
     }
 
 }

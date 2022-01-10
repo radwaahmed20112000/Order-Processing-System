@@ -13,7 +13,7 @@ public class CartController {
     }
     //on edit quantity button clicked
    public void editQuantity(int bookId , int newCount,String email){
-       userEmailMapper(email).getCart().editQuantity(bookId,newCount);
+       userEmailMapper(email).getCart().editCartBookCount(bookId,newCount);
    }
    //on remove from cart button clicked
     public void removeFromCart(int bookId ,String email){

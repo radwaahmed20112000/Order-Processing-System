@@ -1,12 +1,14 @@
 package interfaces;
 
 
+import java.util.List;
+
 public interface ICart {
 
-    void addToCart(int bookId , int count);
-    void editQuantity(int bookId , int newCount);
+    boolean addToCart(int bookId , int count);
+    void editCartBookCount(int bookId , int newCount);
     void removeFromCart(int bookId);
-    Object[] viewCart();
+    List<String> viewCart();
     float getCartPrice();
 
 }

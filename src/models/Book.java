@@ -5,6 +5,8 @@ import interfaces.IBookAuthor;
 import interfaces.IPublisher;
 import services.BookService;
 
+import java.util.Arrays;
+
 public class Book implements IBook {
     int bookId;
     String title;
@@ -80,10 +82,25 @@ public class Book implements IBook {
     public int editBookAuthors(IBookAuthor[] updatedBookAuthors){
         return bookService.editBookAuthor(this, updatedBookAuthors);
     }
-    public int editBookCount (int newCount){
-        return bookService.editBookCount(this.bookId,newCount);
+    public int editBookQuantity (int newQuantity){
+        return bookService.editBookQuantity(this.bookId,newQuantity);
     }
     public boolean isEnoughCount(int count){
         return bookService.isEnoughCount(this.bookId,count);
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "bookId=" + bookId +
+                ", title='" + title + '\'' +
+                ", publisher=" + publisher +
+                ", publicationYear='" + publicationYear + '\'' +
+                ", sellingPrice=" + sellingPrice +
+                ", category='" + category + '\'' +
+                ", minQuantity=" + minQuantity +
+                ", currentQuantity=" + currentQuantity +
+                ", bookAuthors=" + Arrays.toString(bookAuthors) +
+                '}';
     }
 }

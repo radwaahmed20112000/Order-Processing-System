@@ -4,7 +4,7 @@ public interface IBook {
 
  int editBook(IBook updatedBook);
  int editBookAuthors(IBookAuthor[] UpdatedBookAuthors);
-  int editBookCount (int newCount);
+  int editBookQuantity (int newQuantity);
 
   boolean isEnoughCount(int count);
 
@@ -17,6 +17,6 @@ public interface IBook {
   int getMinQuantity() ;
   int getCurrentQuantity() ;
  IBookAuthor[] getBookAuthors() ;
-
+  String toString();
 
 }
