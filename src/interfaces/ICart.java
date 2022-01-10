@@ -11,8 +11,10 @@ public interface ICart {
 
     void removeFromCart(int bookId);
 
-    List<String> viewCart();
+    List<String> viewCartDetails();
 
     float getCartPrice();
+
+    void buyCart();
 
 }
